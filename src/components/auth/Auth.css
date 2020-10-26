@@ -1,0 +1,13 @@
+.Auth-form {
+    border: 1px solid rgb(129, 129, 129);
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 300px auto
+}
+
+.Auth-form__footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
