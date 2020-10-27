@@ -83,3 +83,22 @@
 .Sidebar-list__item:hover > a {
     color: #fff;
 }
+
+
+/* HEADER */
+.Header {
+    background: linear-gradient(0deg,#3358f4,#1d8cf8);
+    height: 80px;
+    color: #fff;
+    line-height: 1.652rem;
+    font-size: 20px;
+}
+.Header-brand {
+    color: #fff;
+    font-size: 25px;
+    transition: all 0.5s ease;
+}
+.Header-brand:hover {
+    color: #fff;
+    padding-left: 10px;
+}

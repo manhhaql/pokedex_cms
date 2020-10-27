@@ -18,8 +18,8 @@ const HeaderComponent = (props) => {
 
     return (
         <div>
-            <Navbar color="light" light expand="md">
-                <NavbarBrand href="/">reactstrap</NavbarBrand>
+            <Navbar className="Header">
+                <NavbarBrand className="Header-brand" href="/">Component Name</NavbarBrand>
                 <Nav className="ml-auto">
                     <NavItem className="mr-2">
                         <NavbarText>
@@ -28,7 +28,7 @@ const HeaderComponent = (props) => {
                     </NavItem>
                     <NavItem>
                         <UncontrolledDropdown nav inNavbar>
-                            <DropdownToggle nav>
+                            <DropdownToggle nav caret className="text-white">
                                 <i className="fas fa-user-cog"></i>
                             </DropdownToggle>
                             <DropdownMenu right>

@@ -18,21 +18,21 @@ const SidebarComponent = (props) => {
                 </div>
                 <ul className="Sidebar-list list-unstyled">
                     <li className="Sidebar-list__item">
-                        <Link>
-                            <i className="fas fa-users mr-2 fa-2x"></i>
-                            Users
-                        </Link>
-                    </li>
-                    <li className="Sidebar-list__item">
-                        <Link>
+                        <Link to={`/main/dashboard`}>
                             <i className="fas fa-chart-pie mr-2 fa-2x"></i>
                             Dashboard
                         </Link>
                     </li>
                     <li className="Sidebar-list__item">
-                        <Link>
+                        <Link to={`/main/pokemon`}>
                             <i className="fas fa-dragon mr-2 fa-2x"></i>
                             Pokemon
+                        </Link>
+                    </li>
+                    <li className="Sidebar-list__item">
+                        <Link to={`/main/users`}>
+                            <i className="fas fa-users mr-2 fa-2x"></i>
+                            Users
                         </Link>
                     </li>
                 </ul>

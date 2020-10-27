@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
 
 import SidebarComponent from './Sidebar';
 import HeaderComponent from './Header';
 import DashboardComponent from './dashboard';
+
+import MainRoutes from './MainRoutes';
 
 import "./Main.css";
 
@@ -15,7 +18,7 @@ class MainComponent extends React.Component {
                 <HeaderComponent/>
                 <div className="Main-content">
                     <SidebarComponent/>
-                    <DashboardComponent/>
+                    {renderRoutes(MainRoutes)}
                 </div>
             </div>
         )
