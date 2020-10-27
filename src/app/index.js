@@ -5,16 +5,29 @@ import { renderRoutes } from 'react-router-config';
 import { createBrowserHistory } from 'history';
 
 import Store from './store';
-
 import AppRoutes from './AppRoutes';
-import { loadUser } from '../store/auth/actions';
+import AccessControl from './accessControl';
 
 const store = Store();
 const browserHistory = createBrowserHistory();
 
+const accessControl = new AccessControl(store, browserHistory);
+accessControl.checkRoute(browserHistory.location.pathname);
+
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.unlistenRouterChanged = null;
+  }
   componentDidMount() {
-    store.dispatch(loadUser());
+    this.unlistenRouterChanged = browserHistory.listen((location) => {
+      accessControl.checkRoute(location.pathname);
+    });
+  };
+  componentWillUnmount() {
+    if (this.unlistenRouterChanged) {
+      this.unlistenRouterChanged();
+    }
   };
 
   render() {

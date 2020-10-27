@@ -2,10 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { register } from '../../store/auth/actions';
-import { clearError } from '../../store/error/actions';
+import HTTPRequest from 'helper/httpRequest';
 
-import * as authActionTypes from '../../store/auth/actionTypes';
+import {loadAuthData} from 'store/auth/actions'
 
 import {
     Button,
@@ -19,10 +18,10 @@ import {
 
 class RegisterComponent extends React.Component {
     state = {
-        message: null,
+        errorMessage: null,
+        isLoading: false,
         username: '',
         email: '',
-        phone: '',
         password: '',
         password_check:'',
         type: 1
@@ -43,28 +42,47 @@ class RegisterComponent extends React.Component {
             password_check: this.state.password_check,
             type: this.state.type,
         }
-        this.props.register(user, this.props.history)
-        
-    };
+        this.setState({
+            isLoading: false
+        });
 
-    componentDidUpdate(prevProps) {
-        const {error, isAuthenticated} = this.props;
-        if(error !== prevProps.error) {
-            if(error.code === authActionTypes.REGISTER_FAILED) {
-                this.setState({
-                    message: error.error
-                })
-            } else {
-                this.setState({
-                    message: null
-                })
+        HTTPRequest.post({
+            url: 'authentication/signup',
+            data: {
+                user,
             }
-        }
+        }).then(response => {
+            if(response.data.code !== "SUCCESS") {
+                // Show message
+                console.log(response.data)
+                return;
+            }
+            localStorage.setItem("token", response.data.data.token)
+            this.props.loadAuthData(response.data.data)
+
+            this.setState({
+                isLoading: false,
+                errorMessage: null
+            });
+
+            this.props.history.push(`/main`)
+            
+        }).catch(error => {
+            this.setState({
+                isLoading: false,
+                errorMessage: error.response.data.error
+            });
+
+            // Show message
+        });
+        
     };
     
     componentWillUnmount() {
-        this.props.clearError();
-    }
+        this.setState({
+            errorMessage: null
+        });
+    };
 
     render() {
         return (
@@ -150,13 +168,11 @@ class RegisterComponent extends React.Component {
 };
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.appAuthentication.isAuthenticated,
-    error: state.appError
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    register: (user, history) => dispatch(register(user, history)),
-    clearError: () => dispatch(clearError())
+    loadAuthData: (newAuthData) => dispatch(loadAuthData(newAuthData))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterComponent);

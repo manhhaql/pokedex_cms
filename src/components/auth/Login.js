@@ -2,9 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-import { login } from '../../store/auth/actions';
-import { clearError } from '../../store/error/actions';
-import * as authActionTypes from '../../store/auth/actionTypes';
+import { loadAuthData } from '../../store/auth/actions';
+import HTTPRequest from 'helper/httpRequest';
 
 import {
     Button,
@@ -18,7 +17,8 @@ import {
 
 class LoginComponent extends React.Component {
     state = {
-        message: null,
+        errorMessage: null,
+        isLoading: false,
         username: '',
         password: ''
     };
@@ -31,31 +31,48 @@ class LoginComponent extends React.Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const user = {
-            username: this.state.username,
-            password: this.state.password,
-        }
-        this.props.login(user, this.props.history)
-    };
 
-    componentDidUpdate(prevProps) {
-        const {error, isAuthenticated} = this.props;
-        if(error !== prevProps.error) {
-            if(error.code === authActionTypes.LOGIN_FAILED) {
-                this.setState({
-                    message: error.error
-                })
-            } else {
-                this.setState({
-                    message: null
-                })
+        this.setState({
+            isLoading: false
+        });
+
+        HTTPRequest.post({
+            url: 'authentication/signin',
+            data: {
+                username: this.state.username,
+                password: this.state.password,
             }
-        }
+        }).then(response => {
+            if(response.data.code !== "SUCCESS") {
+                // Show message
+                console.log(response.data)
+                return;
+            }
+            localStorage.setItem("token", response.data.data.token)
+            this.props.loadAuthData(response.data.data)
+
+            this.setState({
+                isLoading: false,
+                errorMessage: null
+            });
+
+            this.props.history.push(`/main`)
+            
+        }).catch(error => {
+            this.setState({
+                isLoading: false,
+                errorMessage: error.response.data.error
+            });
+
+            // Show message
+        });
     };
 
     componentWillUnmount() {
-        this.props.clearError();
-    }
+        this.setState({
+            errorMessage: null
+        });
+    };
 
     render() {
         return (
@@ -63,7 +80,7 @@ class LoginComponent extends React.Component {
                 <Form className="Auth-form" onSubmit={this.onSubmit}>
                     <h3>Login</h3>
                     {
-                        this.state.message ? <Alert color="danger">{this.state.message}</Alert> : null
+                        this.state.errorMessage ? <Alert color="danger">{this.state.errorMessage}</Alert> : null
                     }
                     <FormGroup row>
                         <Label for="username" sm={2}>Username</Label>
@@ -107,13 +124,11 @@ class LoginComponent extends React.Component {
 };
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.appAuthentication.isAuthenticated,
-    error: state.appError
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    login: (user, history) => dispatch(login(user, history)),
-    clearError: () => dispatch(clearError())
+    loadAuthData: (newAuthData) => dispatch(loadAuthData(newAuthData))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginComponent));

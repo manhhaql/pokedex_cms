@@ -3,19 +3,26 @@ import { Redirect } from 'react-router-dom';
 
 import AuthComponent from '../components/auth';
 import MainComponent from '../components/main';
+import SplashComponent from '../components/splash';
 
 const AppRoutes = [
     {
-        path: `/auth`,
-        component: AuthComponent
+        path: "/",
+        exact: true,
+        component: (props) =><SplashComponent {...props}/>
+    },
+    {
+        path: `/auth/:page(login|register)`,
+        exact: true,
+        component: (props) =><AuthComponent {...props}/>
     },
     {
         path: `/main`,
-        component: MainComponent
+        component: (props) =><MainComponent {...props}/>
     },
     {
         path: '*',
-        component: () => <Redirect to={`/main`} />
+        component: () => <Redirect to="/" />
     }
 ]
 
