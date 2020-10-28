@@ -7,6 +7,7 @@ import HTTPRequest from 'helper/httpRequest';
 import { loadAuthData } from 'store/auth/actions';
 
 import * as localStorageItemConstant from 'constant/localStorageItem';
+import * as routeNameConstant from 'constant/routeName';
 
 import {
     Button,
@@ -59,7 +60,7 @@ class LoginComponent extends React.Component {
                 errorMessage: null
             });
 
-            this.props.history.push(`/main`)
+            this.props.history.push(`/${routeNameConstant.ROUTE_NAME_MAIN}`)
             
         }).catch(error => {
             this.setState({
@@ -115,7 +116,7 @@ class LoginComponent extends React.Component {
                     <Col sm={{offset:2}} className="Auth-form__footer pt-2">
                         <Label>
                             Don't have account?
-                            <Link to="/auth/register"> Register now</Link>
+                            <Link to={`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_REGISTER}`}> Register now</Link>
                         </Label>
                         <Button color="success">Submit</Button>
                         </Col>

@@ -42,7 +42,6 @@ class PokemonComponent extends React.Component {
         this.getPokemons();
     }
     render() {
-        console.log(this.state.pokemonData)
         return (
             <div>
                 <h2>POKEMON COMPONENT</h2>

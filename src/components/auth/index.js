@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 import LoginComponent from './Login';
 import RegisterComponent from './Register';
 
+import * as routeNameConstant from 'constant/routeName';
+
 import './Auth.css'
 
 class AuthComponent extends React.Component {
@@ -15,12 +17,12 @@ class AuthComponent extends React.Component {
         return (
             <div>
                 {
-                    this.props.match.params.page === 'login' && (
+                    this.props.match.params.page === routeNameConstant.ROUTE_NAME_LOGIN && (
                         <LoginComponent />
                     )
                 }
                 {
-                    this.props.match.params.page === 'register' && (
+                    this.props.match.params.page === routeNameConstant.ROUTE_NAME_REGISTER&& (
                         <RegisterComponent />
                     )
                 }

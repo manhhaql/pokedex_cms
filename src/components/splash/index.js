@@ -9,6 +9,7 @@ import { changeInitialAppState } from 'store/appState/actions';
 
 import * as appStateConstant from 'constant/appState';
 import * as localStorageItemConstant from 'constant/localStorageItem';
+import * as routeNameConstant from 'constant/routeName';
 
 class SplashComponent extends React.Component {
     constructor(props) {
@@ -32,11 +33,11 @@ class SplashComponent extends React.Component {
                         console.log(currentPath)
                         localStorage.removeItem(localStorageItemConstant.LOCAL_STORAGE_ITEM_CURRENT_PATH);
                         if(currentPath.indexOf('//') > - 1) {
-                            currentPath = `/auth/login`
+                            currentPath = `/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`
                         }
                         this.props.history.replace(currentPath);
                     } else {
-                        this.props.history.replace(`/auth/login`);
+                        this.props.history.replace(`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`);
                     }
                     return;
                 }
@@ -44,11 +45,11 @@ class SplashComponent extends React.Component {
                 if(currentPath) {
                     localStorage.removeItem(localStorageItemConstant.LOCAL_STORAGE_ITEM_CURRENT_PATH);
                     if(currentPath.indexOf('//') > - 1) {
-                        currentPath = `/auth/login`
+                        currentPath = `/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`
                     } 
                     this.props.history.replace(currentPath);
                 } else {
-                    this.props.history.replace(`/main/dashbpard`);
+                    this.props.history.replace(`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_DASHBOARD}`);
                 }
             }).catch(error => {
                 console.log(error)
@@ -60,11 +61,11 @@ class SplashComponent extends React.Component {
             if(currentPath) {
                 localStorage.removeItem(localStorageItemConstant.LOCAL_STORAGE_ITEM_CURRENT_PATH);
                 if(currentPath.indexOf('//') > - 1) {
-                    currentPath = `/auth/login`
+                    currentPath = `/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`
                 }
                 this.props.history.replace(currentPath);
             } else {
-                this.props.history.replace(`/auth/login`);
+                this.props.history.replace(`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`);
             }
         }
     };
