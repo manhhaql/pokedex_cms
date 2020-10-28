@@ -8,7 +8,6 @@ import UsersComponent from './users';
 const MainRoutes = [
     {
         path: `/main/dashboard`,
-        exact: true,
         component: (props) =><DashboardComponent {...props}/>
     },
     {

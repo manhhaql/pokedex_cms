@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { Router, Switch } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import { createBrowserHistory } from 'history';
 
@@ -20,7 +20,7 @@ class App extends React.Component {
     this.unlistenRouterChanged = null;
   }
   componentDidMount() {
-    this.unlistenRouterChanged = browserHistory.listen((location) => {
+    this.unlistenRouterChanged = browserHistory.listen((location, action) => {
       accessControl.checkRoute(location.pathname);
     });
   };
@@ -34,7 +34,9 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <Router history={browserHistory}>
-          {renderRoutes(AppRoutes)}
+          <Switch>
+            {renderRoutes(AppRoutes)}
+          </Switch>
         </Router>
       </Provider>
     );

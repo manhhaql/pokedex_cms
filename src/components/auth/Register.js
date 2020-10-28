@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 
 import HTTPRequest from 'helper/httpRequest';
 
-import {loadAuthData} from 'store/auth/actions'
+import {loadAuthData} from 'store/auth/actions';
+
+import * as localStorageItemConstant from 'constant/localStorageItem';
 
 import {
     Button,
@@ -57,7 +59,7 @@ class RegisterComponent extends React.Component {
                 console.log(response.data)
                 return;
             }
-            localStorage.setItem("token", response.data.data.token)
+            localStorage.setItem(localStorageItemConstant.LOCAL_STORAGE_ITEM_TOKEN, response.data.data.token)
             this.props.loadAuthData(response.data.data)
 
             this.setState({

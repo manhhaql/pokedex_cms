@@ -5,7 +5,6 @@ import { renderRoutes } from 'react-router-config';
 
 import SidebarComponent from './Sidebar';
 import HeaderComponent from './Header';
-import DashboardComponent from './dashboard';
 
 import MainRoutes from './MainRoutes';
 

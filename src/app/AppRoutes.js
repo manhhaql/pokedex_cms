@@ -7,7 +7,7 @@ import SplashComponent from '../components/splash';
 
 const AppRoutes = [
     {
-        path: "/",
+        path: `/`,
         exact: true,
         component: (props) =><SplashComponent {...props}/>
     },
@@ -22,7 +22,7 @@ const AppRoutes = [
     },
     {
         path: '*',
-        component: () => <Redirect to="/" />
+        component: () => <Redirect to={`/`} />
     }
 ]
 
