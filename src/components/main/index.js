@@ -13,11 +13,13 @@ import "./Main.css";
 class MainComponent extends React.Component {
     render() {
         return (
-            <div>
+            <div className="Main">
                 <HeaderComponent/>
-                <div className="Main-content">
-                    <SidebarComponent/>
-                    {renderRoutes(MainRoutes)}
+                <div className="Main-wrapper">
+                        <SidebarComponent/>
+                        <div className="Main-content">
+                            {renderRoutes(MainRoutes)}
+                        </div>
                 </div>
             </div>
         )

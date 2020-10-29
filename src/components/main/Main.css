@@ -1,18 +1,33 @@
 .Main {
-
+    position: relative;
+    width: 100vw;
+    overflow: hidden;
+}
+.Main-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin: 0 20px;
 }
 .Main-content {
     display: flex;
     flex-direction: row;
+    flex: 1;
+    width: 100%;
+    overflow: hidden;
+    margin: 50px 0;
 }
-
+.Content {
+    width: 100%;
+    min-width: 600px;
+    overflow: hidden;
+}
 /* SIDEBAR */
 .Sidebar {
     width: 250px;
     height: 650px;
     border-radius: 10px;
     background: linear-gradient(0deg,#3358f4,#1d8cf8);
-    margin:50% 20px 0 20px;
+    margin:50% 20px 0 0;
     position: relative;
 }
 .Sidebar-logo > div {

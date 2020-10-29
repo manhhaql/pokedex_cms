@@ -1,0 +1,16 @@
+.Pokemon-table__img {
+    width: 100px;
+    height: auto;
+}
+.Pokemon-fire {
+    background-color: #F08030;
+}
+.Pokemon-water {
+    background-color: #6890F0;
+}
+.Pokemon-grass {
+    background-color: #78C850;
+}
+.Pokemon-flying {
+    background-color: #A890F0
+}
