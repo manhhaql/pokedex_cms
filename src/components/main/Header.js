@@ -69,23 +69,25 @@ class HeaderComponent extends React.Component {
                         </NavbarText>
                     </NavItem>
                     <NavItem>
-                        <UncontrolledDropdown nav inNavbar>
-                            <DropdownToggle nav caret className="text-white">
-                                <i className="fas fa-user-cog"></i>
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                                <DropdownItem>
-                                    Option 1
-                                </DropdownItem>
-                                <DropdownItem>
-                                    Option 2
-                                </DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem className=" text-center">
-                                    <Link to="" className="text-danger" href="#" onClick={this.onLogoutClicked}><i className="fas fa-power-off mr-2"></i>Logout</Link>
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
+                        <ul className="list-unstyled">
+                            <UncontrolledDropdown nav inNavbar>
+                                <DropdownToggle nav caret className="text-white">
+                                    <i className="fas fa-user-cog"></i>
+                                </DropdownToggle>
+                                <DropdownMenu right>
+                                    <DropdownItem>
+                                        Option 1
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        Option 2
+                                    </DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem className=" text-center">
+                                        <Link to="" className="text-danger" href="#" onClick={this.onLogoutClicked}><i className="fas fa-power-off mr-2"></i>Logout</Link>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                        </ul>
                     </NavItem>
                 </Nav>
             </Navbar>
