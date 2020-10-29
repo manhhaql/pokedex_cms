@@ -1,25 +1,17 @@
 .Main {
-    position: relative;
     width: 100vw;
-    overflow: hidden;
+    height: 100vh;
+    overflow-x: auto;
+    padding-bottom: 80px;
 }
 .Main-wrapper {
+    margin: 20px;
     display: flex;
-    flex-direction: row;
-    margin: 0 20px;
 }
 .Main-content {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    width: 100%;
     overflow: hidden;
-    margin: 50px 0;
-}
-.Content {
+    padding-left: 20px;
     width: 100%;
-    min-width: 600px;
-    overflow: hidden;
 }
 /* SIDEBAR */
 .Sidebar {
@@ -27,7 +19,7 @@
     height: 650px;
     border-radius: 10px;
     background: linear-gradient(0deg,#3358f4,#1d8cf8);
-    margin:50% 20px 0 0;
+    margin-top: 50px;
     position: relative;
 }
 .Sidebar-logo > div {
@@ -102,11 +94,38 @@
 
 /* HEADER */
 .Header {
-    background: linear-gradient(0deg,#3358f4,#1d8cf8);
-    height: 80px;
+    height: 120px;
     color: #fff;
     line-height: 1.652rem;
     font-size: 20px;
+}
+.Header::after {
+    content: "";
+    background: url("https://storage.googleapis.com/hapokedex.appspot.com/public/header_bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.8;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+.Header::before {
+    content: "";
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0.5;
+    top: -250px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: 0;
+}
+.Header * {
+    z-index: 2;
 }
 .Header-brand {
     color: #fff;
@@ -116,4 +135,20 @@
 .Header-brand:hover {
     color: #fff;
     padding-left: 10px;
+}
+
+/* FOOTER */
+.Footer {
+    background: linear-gradient(15deg,#25272e,#475461);
+    height: 80px;
+    color: #fff;
+    line-height: 1.652rem;
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }

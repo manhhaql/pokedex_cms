@@ -5,6 +5,7 @@ import { renderRoutes } from 'react-router-config';
 
 import SidebarComponent from './Sidebar';
 import HeaderComponent from './Header';
+import FooterComponent from './Footer';
 
 import MainRoutes from './MainRoutes';
 
@@ -16,11 +17,12 @@ class MainComponent extends React.Component {
             <div className="Main">
                 <HeaderComponent/>
                 <div className="Main-wrapper">
-                        <SidebarComponent/>
-                        <div className="Main-content">
-                            {renderRoutes(MainRoutes)}
-                        </div>
+                    <SidebarComponent/>
+                    <div className="Main-content">
+                        {renderRoutes(MainRoutes)}
+                    </div>
                 </div>
+                <FooterComponent/>
             </div>
         )
     }

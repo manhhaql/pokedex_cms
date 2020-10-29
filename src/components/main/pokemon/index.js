@@ -24,7 +24,7 @@ class PokemonComponent extends React.Component {
                 weakness_id: null,
                 ability_id: null,
                 page: 1,
-                limit: 10,
+                limit: 5,
                 
             }
         };
@@ -72,9 +72,9 @@ class PokemonComponent extends React.Component {
         })
     };
 
-    _renderPokemonType(type) {
+    _renderPokemonType(type, index) {
         return (
-            <Badge className=
+            <Badge key={index} className=
                 {`font-weight-bold text-nowrap text-capitalize mr-1 p-1  
                     Pokemon-${
                         type.type_id ===  1 ? 'fire' :
@@ -149,7 +149,7 @@ class PokemonComponent extends React.Component {
             },
             {
                 th: "Image",
-                td: (pokemon, index) => <img className="Pokemon-table__img" src={pokemon.image}/>,
+                td: (pokemon, index) => <img className="Pokemon-table__img" alt="" src={pokemon.image}/>,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'image'
@@ -170,14 +170,14 @@ class PokemonComponent extends React.Component {
             },
             {
                 th: "Of 1st Stage",
-            td: (pokemon, index) => <Link className="text-decoration-none">{pokemon.of_first_stage ? `${pokemon.of_first_stage.name} (${pokemon.of_first_stage.id})` : pokemon.of_first_stage}</Link>,
+            td: (pokemon, index) => <Link to="/" className="text-decoration-none">{pokemon.of_first_stage ? `${pokemon.of_first_stage.name} (${pokemon.of_first_stage.id})` : pokemon.of_first_stage}</Link>,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle text-capitalize',
                 key: 'of_first_stage'
             },
             {
                 th: "Type",
-                td: (pokemon, index) => pokemon.types.map(type => this._renderPokemonType(type)),
+                td: (pokemon, index) => pokemon.types.map((type, index) => this._renderPokemonType(type, index)),
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'type'
@@ -250,20 +250,20 @@ class PokemonComponent extends React.Component {
 
     render() {
         return (
-            <div className="Content">
-                <h2>POKEMON COMPONENT</h2>
+            <div>
+                <h2 className="text-secondary">Pokemon Table</h2>
                 {
                     this.state.pokemonData && (
                         <div>
+                            {this._renderPokemonTable()}
                             <PaginationComponent
-                                limits={[1, 2, 10]}
+                                limits={[2, 5, 10, 50]}
                                 page={this.state.params.page}
                                 limit={this.state.params.limit}
                                 total={this.state.total}
                                 onChangePage={(page) => this.onChangePage(page)}
                                 onChangeLimit={(limit) => this.onChangeLimit(limit)}
                             />
-                            {this._renderPokemonTable()}
                         </div>
                     )
                 }

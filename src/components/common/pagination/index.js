@@ -26,7 +26,7 @@ class PaginationComponent extends React.Component {
 
     render() {
         return (
-            <div className='d-flex align-items-start'>
+            <div className='d-flex align-items-start justify-content-end mt-2'>
                 <Pagination aria-label="Page navigation">
                     <PaginationItem onClick={(event) => this.onChangePage(event, 1)} >
                         <PaginationLink first  />

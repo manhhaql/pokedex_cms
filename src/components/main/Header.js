@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom'
 
 import HTTPRequest from 'helper/httpRequest';
 
@@ -59,37 +60,35 @@ class HeaderComponent extends React.Component {
             return null
         };
         return (
-            <div>
-                <Navbar className="Header">
-                    <NavbarBrand className="Header-brand" href="/">Component Name</NavbarBrand>
-                    <Nav className="ml-auto">
-                        <NavItem className="mr-2">
-                            <NavbarText>
-                                Hello <strong>{this.props.appAuthentication.user.username}!</strong>
-                            </NavbarText>
-                        </NavItem>
-                        <NavItem>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret className="text-white">
-                                    <i className="fas fa-user-cog"></i>
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem>
-                                        Option 1
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        Option 2
-                                    </DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem className=" text-center">
-                                        <a className="text-danger" onClick={this.onLogoutClicked}><i className="fas fa-power-off mr-2"></i>Logout</a>
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
-            </div>
+            <Navbar className="Header">
+                <NavbarBrand className="Header-brand" href="/" style={{zIndex:2}}>Component Name</NavbarBrand>
+                <Nav className="ml-auto">
+                    <NavItem className="mr-2">
+                        <NavbarText>
+                            Hello <strong>{this.props.appAuthentication.user.username}!</strong>
+                        </NavbarText>
+                    </NavItem>
+                    <NavItem>
+                        <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle nav caret className="text-white">
+                                <i className="fas fa-user-cog"></i>
+                            </DropdownToggle>
+                            <DropdownMenu right>
+                                <DropdownItem>
+                                    Option 1
+                                </DropdownItem>
+                                <DropdownItem>
+                                    Option 2
+                                </DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem className=" text-center">
+                                    <Link to="" className="text-danger" href="#" onClick={this.onLogoutClicked}><i className="fas fa-power-off mr-2"></i>Logout</Link>
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                    </NavItem>
+                </Nav>
+            </Navbar>
         )
     };
 };

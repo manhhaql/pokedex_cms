@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import PaginationComponent from '../pagination';
-
 import './Table.css';
 
 class TableCommonComponent extends React.Component {
