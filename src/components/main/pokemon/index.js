@@ -6,6 +6,8 @@ import { Badge } from 'reactstrap';
 
 import HTTPRequest from 'helper/httpRequest';
 
+import * as routeNameConstant from 'constant/routeName';
+
 import TableCommonComponent from 'components/common/table';
 import PaginationComponent from 'components/common/pagination';
 
@@ -26,6 +28,11 @@ class PokemonComponent extends React.Component {
                 page: 1,
                 limit: 5,
                 
+            },
+            filterData: {
+                types: null,
+                weakness: null,
+                abilities: null,
             }
         };
         this._isMounted = false;
@@ -55,11 +62,12 @@ class PokemonComponent extends React.Component {
                 limit: this.state.params.limit,
                 id: params.id,
                 name: params.name,
-                type_ud: params.type_ud,
+                type_id: params.type_id,
                 weakness_id: params.weakness_id,
                 ability_id: params.ability_id,
             }
         }).then(response => {
+            // console.log(70, response.data.data)
             if(this._isMounted) {
                 this.setState({
                     pokemonData: response.data.data,
@@ -72,21 +80,96 @@ class PokemonComponent extends React.Component {
         })
     };
 
+    getTypes() {
+        HTTPRequest.get({
+            url: 'properties/type',
+            params: {}
+        }).then(response => {
+            if(this._isMounted) {
+                this.setState({
+                    filterData: Object.assign({}, this.state.filterData, {
+                        types: response.data.data
+                    }),
+                })
+            }
+            
+        }).catch(error => {
+            console.log(error)
+        })
+    };
+
+    onChangePage(page) {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                page: page
+            })
+        }, () => {
+            this.getPokemons();
+        });
+    };
+    onChangeLimit(limit) {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                limit: limit
+            })
+        }, () => {
+            this.getPokemons();
+        });
+    };
+
+    onChangeFilterByType(type_id) {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                type_id: type_id
+            })
+        },() => {
+            this.getPokemons();
+        }, () => {
+        });
+    };
+    onChangeFilterByWeakness(weakness_id) {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                weakness_id: weakness_id
+            })
+        }, () => {
+            this.getPokemons();
+        });
+    };
+    onChangeFilterByAbility(ability_id) {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                ability_id: ability_id
+            })
+        }, () => {
+            this.getPokemons();
+        });
+    };
+
+    onPokemonDetailClicked(e, pokemon_id) {
+        e.preventDefault();
+        this.props.history.push(`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon_id}`);
+    };
+
     _renderPokemonType(type, index) {
         return (
             <Badge key={index} className=
                 {`font-weight-bold text-nowrap text-capitalize mr-1 p-1  
                     Pokemon-${
-                        type.type_id ===  1 ? 'fire' :
-                        type.type_id === 2 ? 'water' :
-                        type.type_id === 3 ? 'grass' :
-                        type.type_id === 4 ? 'flying' :
+                        type ===  1 ? 'fire' :
+                        type === 2 ? 'water' :
+                        type === 3 ? 'grass' :
+                        type === 4 ? 'flying' :
                         ''
                     }
                 `}
             >
                 {
-                    type.type_name
+                    type ===  1 ? 'fire' :
+                    type === 2 ? 'water' :
+                    type === 3 ? 'grass' :
+                    type === 4 ? 'flying' :
+                    ''
                 }
             </Badge>
         )
@@ -142,7 +225,7 @@ class PokemonComponent extends React.Component {
             },
             {
                 th: "Name",
-                td: (pokemon, index) => pokemon.name,
+            td: (pokemon, index) => <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon.id}`} className="text-decoration-none">{pokemon.name}</Link>,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle font-weight-bold text-primary text-capitalize',
                 key: 'name'
@@ -177,7 +260,7 @@ class PokemonComponent extends React.Component {
             },
             {
                 th: "Type",
-                td: (pokemon, index) => pokemon.types.map((type, index) => this._renderPokemonType(type, index)),
+                td: (pokemon, index) => pokemon.types ? JSON.parse(pokemon.types).map((type, index) => this._renderPokemonType(type, index)) : null,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'type'
@@ -220,28 +303,10 @@ class PokemonComponent extends React.Component {
         </div>
     };
 
-    onChangePage(page) {
-        this.setState({
-            params: Object.assign({}, this.state.params, {
-                page: page
-            })
-        }, () => {
-            this.getPokemons();
-        });
-    };
-    onChangeLimit(limit) {
-        this.setState({
-            params: Object.assign({}, this.state.params, {
-                limit: limit
-            })
-        }, () => {
-            this.getPokemons();
-        });
-    };
-
     componentDidMount() {
         this._isMounted = true;
         this.getPokemons();
+        this.getTypes();
     };
 
     componentWillUnmount() {
@@ -252,6 +317,24 @@ class PokemonComponent extends React.Component {
         return (
             <div>
                 <h2 className="text-secondary">Pokemon Table</h2>
+                <div className="row">
+                    <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
+                    <div className='form-group'>
+                        <label className="form-control-plaintext">
+                            By type
+                        </label>
+                        <select className="form-control selector" onChange={(event) => this.onChangeFilterByType(event.target.value)}>
+                            <option value=''>Select</option>
+                            {
+                                this.state.filterData.types && this.state.filterData.types.map((type, index) => {
+                                    return <option value={parseInt(type.id)} key={index}>{
+                                    type.name}</option>
+                                })
+                            }
+                        </select>
+                    </div>
+                    </div>
+                </div>
                 {
                     this.state.pokemonData && (
                         <div>

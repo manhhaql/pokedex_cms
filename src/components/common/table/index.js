@@ -36,7 +36,7 @@ class TableCommonComponent extends React.Component {
                                 </thead>
                                 <tbody className=''>
                                     {
-                                        this.props.data.map((item, index) => <tr className='' key={`tablerow-${index}`}>
+                                        this.props.data && this.props.data.map((item, index) => <tr className='' key={`tablerow-${index}`}>
                                             {
                                                 this.props.options.map(option =>
                                                     <td
