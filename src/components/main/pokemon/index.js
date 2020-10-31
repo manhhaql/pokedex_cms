@@ -7,9 +7,12 @@ import { Badge } from 'reactstrap';
 import HTTPRequest from 'helper/httpRequest';
 
 import * as routeNameConstant from 'constant/routeName';
+import * as dataConstant from 'constant/data';
 
 import TableCommonComponent from 'components/common/table';
 import PaginationComponent from 'components/common/pagination';
+
+import PokemonAbilityComponent from './PokemonAbility';
 
 import "./Pokemon.css";
 
@@ -92,7 +95,38 @@ class PokemonComponent extends React.Component {
                     }),
                 })
             }
-            
+        }).catch(error => {
+            console.log(error)
+        })
+    };
+    getWeakness() {
+        HTTPRequest.get({
+            url: 'properties/weakness',
+            params: {}
+        }).then(response => {
+            if(this._isMounted) {
+                this.setState({
+                    filterData: Object.assign({}, this.state.filterData, {
+                        weakness: response.data.data
+                    }),
+                })
+            }
+        }).catch(error => {
+            console.log(error)
+        })
+    };
+    getAbilities() {
+        HTTPRequest.get({
+            url: 'properties/ability',
+            params: {}
+        }).then(response => {
+            if(this._isMounted) {
+                this.setState({
+                    filterData: Object.assign({}, this.state.filterData, {
+                        abilities: response.data.data
+                    }),
+                })
+            }
         }).catch(error => {
             console.log(error)
         })
@@ -151,41 +185,72 @@ class PokemonComponent extends React.Component {
         this.props.history.push(`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon_id}`);
     };
 
-    _renderPokemonType(type, index) {
+    _renderPokemonProperty(pokemon, index) {
         return (
             <Badge key={index} className=
                 {`font-weight-bold text-nowrap text-capitalize mr-1 p-1  
                     Pokemon-${
-                        type ===  1 ? 'fire' :
-                        type === 2 ? 'water' :
-                        type === 3 ? 'grass' :
-                        type === 4 ? 'flying' :
+                        pokemon ===  dataConstant.POKEMON_NORMAL ? 'normal' :
+                        pokemon ===  dataConstant.POKEMON_FIRE ? 'fire' :
+                        pokemon ===  dataConstant.POKEMON_WATER ? 'water' :
+                        pokemon ===  dataConstant.POKEMON_GRASS ? 'grass' :
+                        pokemon ===  dataConstant.POKEMON_ELECTRIC ? 'electric' :
+                        pokemon ===  dataConstant.POKEMON_ICE ? 'ice' :
+                        pokemon ===  dataConstant.POKEMON_FIGHTING ? 'fighting' :
+                        pokemon ===  dataConstant.POKEMON_POISON ? 'poison' :
+                        pokemon ===  dataConstant.POKEMON_FLYING ? 'flying' :
+                        pokemon ===  dataConstant.POKEMON_PSYCHIC ? 'psychic' :
+                        pokemon ===  dataConstant.POKEMON_BUG ? 'bug' :
+                        pokemon ===  dataConstant.POKEMON_ROCK ? 'rock' :
+                        pokemon ===  dataConstant.POKEMON_GHOST ? 'ghost' :
+                        pokemon ===  dataConstant.POKEMON_DARK ? 'dark' :
+                        pokemon ===  dataConstant.POKEMON_DRAGON ? 'dragon' :
+                        pokemon ===  dataConstant.POKEMON_STEEL ? 'steel' :
+                        pokemon ===  dataConstant.POKEMON_FAIRY ? 'fairy' :
                         ''
                     }
                 `}
             >
                 {
-                    type ===  1 ? 'fire' :
-                    type === 2 ? 'water' :
-                    type === 3 ? 'grass' :
-                    type === 4 ? 'flying' :
+                    pokemon ===  dataConstant.POKEMON_NORMAL ? 'normal' :
+                    pokemon ===  dataConstant.POKEMON_FIRE ? 'fire' :
+                    pokemon ===  dataConstant.POKEMON_WATER ? 'water' :
+                    pokemon ===  dataConstant.POKEMON_GRASS ? 'grass' :
+                    pokemon ===  dataConstant.POKEMON_ELECTRIC ? 'electric' :
+                    pokemon ===  dataConstant.POKEMON_ICE ? 'ice' :
+                    pokemon ===  dataConstant.POKEMON_FIGHTING ? 'fighting' :
+                    pokemon ===  dataConstant.POKEMON_POISON ? 'poison' :
+                    pokemon ===  dataConstant.POKEMON_FLYING ? 'flying' :
+                    pokemon ===  dataConstant.POKEMON_PSYCHIC ? 'psychic' :
+                    pokemon ===  dataConstant.POKEMON_BUG ? 'bug' :
+                    pokemon ===  dataConstant.POKEMON_ROCK ? 'rock' :
+                    pokemon ===  dataConstant.POKEMON_GHOST ? 'ghost' :
+                    pokemon ===  dataConstant.POKEMON_DARK ? 'dark' :
+                    pokemon ===  dataConstant.POKEMON_DRAGON ? 'dragon' :
+                    pokemon ===  dataConstant.POKEMON_STEEL ? 'steel' :
+                    pokemon ===  dataConstant.POKEMON_FAIRY ? 'fairy' :
                     ''
                 }
             </Badge>
         )
     };
 
+    _renderPokemonAbility(ability_id, index) {
+        return (
+            <div key={index}>
+                {ability_id}
+            </div>
+        )
+    }
+
     _renderPokemonStatus(status) {
         return (
             <Badge className="font-weight-bold text-nowrap"
                 color={
-                    `${status === 0 ? 'success' :
-                        status === 1 ? 'secondary' :
-                            ''
-                    }`
+                    `${status === dataConstant.STATUS_ACTIVE ? 'success' : 'secondary'}`
                 }>
                 {
-                    status === 0 ? "Active" : 'Inavtive'
+                    status === dataConstant.STATUS_ACTIVE ? "Active" : 'Inavtive'
                 }
             </Badge>
         )
@@ -193,21 +258,17 @@ class PokemonComponent extends React.Component {
     _renderPokemonGender(gender) {
         return (
             <span>
-                <i className={
-                    `mr-1 fas fa-${
-                        gender === 1 ? 'mars' :
-                            gender === 2 ? 'venus' :
-                                gender === 3 ? 'venus-mars' :
-                                    'genderless'
-                    }`
-                }>
-
-                </i>
                 {
-                    gender === 1 ? "Male" :
-                        gender === 2 ? 'Female' :
-                            gender === 3 ? 'Both' :
-                                'Unknown'
+                    gender === dataConstant.GENDER_MALE ? 
+                    <i className="fas fa-mars"></i> : 
+                    gender === dataConstant.GENDER_FEMALE ? 
+                    <i className="fas fa-venus"></i> : 
+                    gender === dataConstant.GENDER_BOTH ?
+                    <span>
+                        <i className="mr-2 fas fa-mars"></i>
+                        <i className="fas fa-venus"></i>
+                    </span> :
+                    "Unknown"
                 }
             </span>
 
@@ -225,7 +286,7 @@ class PokemonComponent extends React.Component {
             },
             {
                 th: "Name",
-            td: (pokemon, index) => <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon.id}`} className="text-decoration-none">{pokemon.name}</Link>,
+                td: (pokemon, index) => <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon.id}`} className="text-decoration-none">{pokemon.name}</Link>,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle font-weight-bold text-primary text-capitalize',
                 key: 'name'
@@ -252,18 +313,36 @@ class PokemonComponent extends React.Component {
                 key: 'tag'
             },
             {
-                th: "Of 1st Stage",
-            td: (pokemon, index) => <Link to="/" className="text-decoration-none">{pokemon.of_first_stage ? `${pokemon.of_first_stage.name} (${pokemon.of_first_stage.id})` : pokemon.of_first_stage}</Link>,
+                th: "Of Basic",
+                td: (pokemon, index) => pokemon.of_basic ? 
+                    <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon.of_basic.id}`} className="text-decoration-none">
+                        {`${pokemon.of_basic.name} (${pokemon.of_basic.id})`}
+                    </Link> 
+                    : pokemon.of_basic,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle text-capitalize',
-                key: 'of_first_stage'
+                key: 'of_basic'
             },
             {
                 th: "Type",
-                td: (pokemon, index) => pokemon.types ? JSON.parse(pokemon.types).map((type, index) => this._renderPokemonType(type, index)) : null,
+                td: (pokemon, index) => pokemon.types ? JSON.parse(pokemon.types).sort().map((type, index) => this._renderPokemonProperty(type, index)) : null,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'type'
+            },
+            {
+                th: "Weakness",
+                td: (pokemon, index) => pokemon.weakness ? JSON.parse(pokemon.weakness).sort().map((weakness, index) => this._renderPokemonProperty(weakness, index)) : null,
+                thClass: 'text-center align-middle',
+                tdClass: 'text-center align-middle',
+                key: 'weakness'
+            },
+            {
+                th: "Abilities",
+                td: (pokemon, index) => pokemon.abilities ? JSON.parse(pokemon.abilities).sort().map((ability_id, index) => <PokemonAbilityComponent ability_id={ability_id} index={index}/>) : null,
+                thClass: 'text-center align-middle',
+                tdClass: 'text-center align-middle',
+                key: 'ability'
             },
             {
                 th: "Height(ft)",
@@ -307,6 +386,8 @@ class PokemonComponent extends React.Component {
         this._isMounted = true;
         this.getPokemons();
         this.getTypes();
+        this.getWeakness();
+        this.getAbilities();
     };
 
     componentWillUnmount() {
@@ -319,20 +400,52 @@ class PokemonComponent extends React.Component {
                 <h2 className="text-secondary">Pokemon Table</h2>
                 <div className="row">
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
-                    <div className='form-group'>
-                        <label className="form-control-plaintext">
-                            By type
-                        </label>
-                        <select className="form-control selector" onChange={(event) => this.onChangeFilterByType(event.target.value)}>
-                            <option value=''>Select</option>
-                            {
-                                this.state.filterData.types && this.state.filterData.types.map((type, index) => {
-                                    return <option value={parseInt(type.id)} key={index}>{
-                                    type.name}</option>
-                                })
-                            }
-                        </select>
+                        <div className='form-group'>
+                            <label className="form-control-plaintext">
+                                By Type
+                            </label>
+                            <select className="form-control selector" onChange={(event) => this.onChangeFilterByType(event.target.value)}>
+                                <option value=''>Select</option>
+                                {
+                                    this.state.filterData.types && this.state.filterData.types.map((type, index) => {
+                                        return <option value={parseInt(type.id)} key={index}>{
+                                        type.name}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
                     </div>
+                    <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
+                        <div className='form-group'>
+                            <label className="form-control-plaintext">
+                                By Weakness
+                            </label>
+                            <select className="form-control selector" onChange={(event) => this.onChangeFilterByWeakness(event.target.value)}>
+                                <option value=''>Select</option>
+                                {
+                                    this.state.filterData.weakness && this.state.filterData.weakness.map((weakness, index) => {
+                                        return <option value={parseInt(weakness.id)} key={index}>{
+                                        weakness.name}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
+                        <div className='form-group'>
+                            <label className="form-control-plaintext">
+                                By Ability
+                            </label>
+                            <select className="form-control selector" onChange={(event) => this.onChangeFilterByAbility(event.target.value)}>
+                                <option value=''>Select</option>
+                                {
+                                    this.state.filterData.abilities && this.state.filterData.abilities.map((ability, index) => {
+                                        return <option value={parseInt(ability.id)} key={index}>{
+                                        ability.name}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
                     </div>
                 </div>
                 {

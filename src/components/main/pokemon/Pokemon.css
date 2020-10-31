@@ -2,6 +2,19 @@
     width: 70px;
     height: auto;
 }
+.Pokemon-ability__text {
+    color: blue;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: default;
+}
+.Pokemon-ability__text:hover {
+    background-color: rgba(0, 0, 255, 0.1);
+}
+
+.Pokemon-normal {
+    background-color: #A8A878;
+}
 .Pokemon-fire {
     background-color: #F08030;
 }
@@ -11,6 +24,45 @@
 .Pokemon-grass {
     background-color: #78C850;
 }
+.Pokemon-electric {
+    background-color: #F8D030;
+}
+.Pokemon-ice {
+    background-color: #98D8D8;
+}
+.Pokemon-fighting {
+    background-color: #C03028;
+}
+.Pokemon-poison {
+    background-color: #A040A0;
+}
+.Pokemon-ground {
+    background-color: #E0C068;
+}
 .Pokemon-flying {
     background-color: #A890F0
+}
+.Pokemon-psychic {
+    background-color: #F85888;
+}
+.Pokemon-bug {
+    background-color: #A8B820;
+}
+.Pokemon-rock {
+    background-color: #B8A038;
+}
+.Pokemon-ghost {
+    background-color: #705898;
+}
+.Pokemon-dark {
+    background-color: #705848;
+}
+.Pokemon-dragon {
+    background-color: #7038F8;
+}
+.Pokemon-steel {
+    background-color: #B8B8D0;
+}
+.Pokemon-fairy {
+    background-color: #F0B6BC;
 }

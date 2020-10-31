@@ -7,6 +7,7 @@ import HTTPRequest from 'helper/httpRequest';
 import {loadAuthData} from 'store/auth/actions';
 
 import * as localStorageItemConstant from 'constant/localStorageItem';
+import * as routeNameConstant from 'constant/routeName';
 
 import {
     Navbar,
@@ -39,9 +40,7 @@ class HeaderComponent extends React.Component {
 
         HTTPRequest.post({
             url: 'authentication/signout',
-            data: {
-                token: this.props.appAuthentication.token
-            }
+            token: this.props.appAuthentication.token
         }).then(response => {
         }).catch(error => {
             console.log(error)
@@ -49,7 +48,7 @@ class HeaderComponent extends React.Component {
             localStorage.removeItem(localStorageItemConstant.LOCAL_STORAGE_ITEM_TOKEN)
             this.props.loadAuthData(null);
             setTimeout(() => {
-                this.props.history.push(`/auth/login`)
+                this.props.history.push(`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`)
             }, 0);
         })
         
@@ -61,7 +60,7 @@ class HeaderComponent extends React.Component {
         };
         return (
             <Navbar className="Header">
-                <NavbarBrand className="Header-brand" href="/" style={{zIndex:2}}>Component Name</NavbarBrand>
+                {/* <NavbarBrand className="Header-brand" href="/" style={{zIndex:2}}>Pokemon</NavbarBrand> */}
                 <Nav className="ml-auto">
                     <NavItem className="mr-2">
                         <NavbarText>

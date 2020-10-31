@@ -13,7 +13,7 @@ class TableCommonComponent extends React.Component {
                 this.props.appAuthentication && <div className='Table' id={this.props.wrapper}>
                     {
                         this.props.data.length === 0 && this.props.appAuthentication.user ?
-                            <div className='d-flex align-items-center justify-content-center' style={{ minHeight: 100 }}>
+                            <div className='d-flex align-items-center justify-content-center' style={{ minHeight: "200px" }}>
                                 <h3 className='kt-font-bold'>
                                     NO DATA
                                 </h3>
@@ -24,7 +24,7 @@ class TableCommonComponent extends React.Component {
                                         {
                                             this.props.options.map(item =>
                                                 <th
-                                                    className={item.thClass}
+                                                    className={`Table-sticky__th ${item.thClass}`}
                                                     style={item.thStyle}
                                                     key={item.key}
                                                 >

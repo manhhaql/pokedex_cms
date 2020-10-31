@@ -1,6 +1,10 @@
 
 .Table {
     width: auto;
-    max-height: 600px;
+    max-height: 530px;
     overflow: auto;
+}
+.Table-sticky__th {
+    position: sticky;
+    top: 0px;
 }

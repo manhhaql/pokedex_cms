@@ -24,9 +24,7 @@ class SplashComponent extends React.Component {
         if(token) {
             HTTPRequest.get({
                 url: 'users/user-info',
-                params: {
-                    token: token
-                }
+                token: token
             }).then(response => {
                 if(response.data.code !== "SUCCESS") {
                     if(currentPath) {
