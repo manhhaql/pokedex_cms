@@ -47,18 +47,18 @@ class PokemonAbilityComponent extends React.Component {
 
     render() {
         return (
-        <div key={this.props.index}>
-            {
-                this.state.ability && (
-                <div>
-                    <span className="Pokemon-ability__text" href="#" id={`Ability-${this.state.ability.id}`}>{this.state.ability.name}</span>
-                    <Tooltip placement="right" isOpen={this.state.isOpen} target={`Ability-${this.state.ability.id}`} toggle={()=>this.toggle()}>
-                        {this.state.ability.description}                    
-                    </Tooltip>
-                </div>
-                )
-            }
-        </div>
+            <div>
+                {
+                    this.state.ability && (
+                    <div>
+                        <span className="Pokemon-ability__text" href="#" id={`Ability-${this.state.ability.id}`}>{this.state.ability.name}</span>
+                        <Tooltip placement="right" isOpen={this.state.isOpen} target={`Ability-${this.state.ability.id}`} toggle={()=>this.toggle()}>
+                            {this.state.ability.description}                    
+                        </Tooltip>
+                    </div>
+                    )
+                }
+            </div>
         )
     }
 };

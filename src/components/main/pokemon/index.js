@@ -255,9 +255,9 @@ class PokemonComponent extends React.Component {
             </Badge>
         )
     };
-    _renderPokemonGender(gender) {
+    _renderPokemonGender(gender, index) {
         return (
-            <span>
+            <span key={index}>
                 {
                     gender === dataConstant.GENDER_MALE ? 
                     <i className="fas fa-mars"></i> : 
@@ -339,7 +339,7 @@ class PokemonComponent extends React.Component {
             },
             {
                 th: "Abilities",
-                td: (pokemon, index) => pokemon.abilities ? JSON.parse(pokemon.abilities).sort().map((ability_id, index) => <PokemonAbilityComponent ability_id={ability_id} index={index}/>) : null,
+                td: (pokemon, index) => pokemon.abilities ? JSON.parse(pokemon.abilities).sort().map((ability_id, index) => <PokemonAbilityComponent ability_id={ability_id} key={index}/>) : null,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'ability'
