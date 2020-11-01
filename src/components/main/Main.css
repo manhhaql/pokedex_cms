@@ -13,6 +13,9 @@
     padding-left: 20px;
     width: 100%;
 }
+.toast-top-right {
+    top: 132px;
+}
 /* SIDEBAR */
 .Sidebar {
     width: 250px;

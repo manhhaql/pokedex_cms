@@ -2,7 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-import { Badge } from 'reactstrap';
+import { 
+    Badge,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
+} from 'reactstrap';
 
 import HTTPRequest from 'helper/httpRequest';
 
@@ -13,6 +19,10 @@ import TableCommonComponent from 'components/common/table';
 import PaginationComponent from 'components/common/pagination';
 
 import PokemonAbilityComponent from './PokemonAbility';
+
+import {
+    UpdatePokemonStatusModal
+} from './PokemonModals';
 
 import "./Pokemon.css";
 
@@ -275,6 +285,79 @@ class PokemonComponent extends React.Component {
         )
     };
 
+    _renderActionColumn(pokemon) {
+        return (
+            <ul className="list-unstyled">
+                <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret className="text-danger" >
+                        <i className="fas fa-cog"></i>
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem className="text-center">
+                            Actions
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>
+                            <Link to="" href="#" className="text-dark" onClick={()=>{}}>
+                                <i className="fas fa-edit mr-2 text-secondary"></i>Edit Generals
+                            </Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Link to="" href="#" className="text-dark" onClick={()=>{}}>
+                                <i className="fas fa-paw mr-2 text-secondary"></i>Change Types
+                            </Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Link to="" href="#" className="text-dark" onClick={()=>{}}>
+                                <i className="fas fa-ghost mr-2 text-secondary"></i>Change Weakness
+                            </Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Link to="" href="#" className="text-dark" onClick={()=>{}}>
+                                <i className="fab fa-superpowers mr-2 text-secondary"></i>Change Abilities
+                            </Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                        {
+                                pokemon.image && (
+                                    <Link to="" href="#" className="text-dark" onClick={()=>{}}>
+                                        <i className="far fa-image mr-2 text-secondary"></i>Update Image
+                                    </Link>
+                                )
+                            }
+                            {
+                                !pokemon.image && (
+                                    <Link to="" href="#" onClick={()=>{}}>
+                                        <i className="far fa-image mr-2 text-secondary"></i>Add Image
+                                    </Link>
+                                )
+                            }
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem className="text-center">
+                            {
+                                pokemon.status === dataConstant.STATUS_ACTIVE && (
+                                    <UpdatePokemonStatusModal 
+                                        pokemon={pokemon}
+                                        getPokemons={()=>this.getPokemons()}
+                                    />
+                                )
+                            }
+                            {
+                                pokemon.status === dataConstant.STATUS_INACTIVE && (
+                                    <UpdatePokemonStatusModal 
+                                        pokemon={pokemon}
+                                        getPokemons={()=>this.getPokemons()}
+                                    />
+                                )
+                            }
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+            </ul>
+        )
+    };
+
     _renderPokemonTable() {
         const options = [
             {
@@ -285,8 +368,17 @@ class PokemonComponent extends React.Component {
                 key: 'id'
             },
             {
+                th: "Action",
+                td: (pokemon, index) => this._renderActionColumn(pokemon),
+                thClass: 'text-center align-middle',
+                tdClass: 'text-center align-middle',
+                key: 'action'
+            },
+            {
                 th: "Name",
-                td: (pokemon, index) => <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon.id}`} className="text-decoration-none">{pokemon.name}</Link>,
+                td: (pokemon, index) => <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon.id}`} className="text-decoration-none">
+                                            {pokemon.name}
+                                        </Link>,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle font-weight-bold text-primary text-capitalize',
                 key: 'name'
@@ -317,29 +409,35 @@ class PokemonComponent extends React.Component {
                 td: (pokemon, index) => pokemon.of_basic ? 
                     <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon.of_basic.id}`} className="text-decoration-none">
                         {`${pokemon.of_basic.name} (${pokemon.of_basic.id})`}
-                    </Link> 
-                    : pokemon.of_basic,
+                    </Link> :
+                     pokemon.of_basic,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle text-capitalize',
                 key: 'of_basic'
             },
             {
                 th: "Type",
-                td: (pokemon, index) => pokemon.types ? JSON.parse(pokemon.types).sort().map((type, index) => this._renderPokemonProperty(type, index)) : null,
+                td: (pokemon, index) => pokemon.types ? 
+                                        JSON.parse(pokemon.types).sort().map((type, index) => this._renderPokemonProperty(type, index)) : 
+                                        null,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'type'
             },
             {
                 th: "Weakness",
-                td: (pokemon, index) => pokemon.weakness ? JSON.parse(pokemon.weakness).sort().map((weakness, index) => this._renderPokemonProperty(weakness, index)) : null,
+                td: (pokemon, index) => pokemon.weakness ? 
+                                        JSON.parse(pokemon.weakness).sort().map((weakness, index) => this._renderPokemonProperty(weakness, index)) : 
+                                        null,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'weakness'
             },
             {
                 th: "Abilities",
-                td: (pokemon, index) => pokemon.abilities ? JSON.parse(pokemon.abilities).sort().map((ability_id, index) => <PokemonAbilityComponent ability_id={ability_id} key={index}/>) : null,
+                td: (pokemon, index) => pokemon.abilities ? 
+                                        JSON.parse(pokemon.abilities).sort().map((ability_id, index) => <PokemonAbilityComponent ability_id={ability_id} key={index}/>) : 
+                                        null,
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'ability'
