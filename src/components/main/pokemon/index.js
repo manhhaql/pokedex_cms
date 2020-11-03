@@ -21,7 +21,8 @@ import PaginationComponent from 'components/common/pagination';
 import PokemonAbilityComponent from './PokemonAbility';
 
 import {
-    UpdatePokemonStatusModal
+    UpdatePokemonStatusModal,
+    PokemonImageModal
 } from './PokemonModals';
 
 import "./Pokemon.css";
@@ -245,14 +246,6 @@ class PokemonComponent extends React.Component {
         )
     };
 
-    _renderPokemonAbility(ability_id, index) {
-        return (
-            <div key={index}>
-                {ability_id}
-            </div>
-        )
-    }
-
     _renderPokemonStatus(status) {
         return (
             <Badge className="font-weight-bold text-nowrap"
@@ -318,20 +311,10 @@ class PokemonComponent extends React.Component {
                             </Link>
                         </DropdownItem>
                         <DropdownItem>
-                        {
-                                pokemon.image && (
-                                    <Link to="" href="#" className="text-dark" onClick={()=>{}}>
-                                        <i className="far fa-image mr-2 text-secondary"></i>Update Image
-                                    </Link>
-                                )
-                            }
-                            {
-                                !pokemon.image && (
-                                    <Link to="" href="#" onClick={()=>{}}>
-                                        <i className="far fa-image mr-2 text-secondary"></i>Add Image
-                                    </Link>
-                                )
-                            }
+                            <PokemonImageModal
+                                pokemon={pokemon}
+                                getPokemons={()=>this.getPokemons()}
+                            />
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem className="text-center">
@@ -522,8 +505,7 @@ class PokemonComponent extends React.Component {
                                 <option value=''>Select</option>
                                 {
                                     this.state.filterData.weakness && this.state.filterData.weakness.map((weakness, index) => {
-                                        return <option value={parseInt(weakness.id)} key={index}>{
-                                        weakness.name}</option>
+                                        return <option value={parseInt(weakness.id)} key={index}>{weakness.name}</option>
                                     })
                                 }
                             </select>
