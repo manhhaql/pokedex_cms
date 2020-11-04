@@ -17,9 +17,12 @@ import {
     FormText
 } from 'reactstrap';
 
+import Select from 'react-select';
+
 import HTTPRequest from 'helper/httpRequest';
 import ToastMessage from 'helper/toastMessage';
 
+import PokemonAbilityComponent from './PokemonAbility';
 
 export const UpdatePokemonStatusModal = withRouter(
     connect(
@@ -339,4 +342,399 @@ export const PokemonImageModal = withRouter(
     )
 );
 
+export const UpdatePokemonTypeModal = withRouter(
+    connect(
+        (state) => ({
+            appAuthentication: state.appAuthentication.current
+        }),
+        (dispatch) => ({
 
+        })
+    )(
+        class UpdatePokemonTypeModalComponent extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    typesData: null,
+                    typesSelected: [],
+                    isOpen: false
+                }
+            };
+
+            toggle = () => {
+                this.setState({
+                    typesSelected: [],
+                    isOpen: !this.state.isOpen
+                })
+            };
+
+            getTypes = () => {
+                HTTPRequest.get({
+                    url: 'properties/type',
+                    params: {}
+                }).then(response => {
+                    let typesData = response.data.data.map((type)=>{
+                        return {
+                            value: type.id,
+                            label: type.name
+                        }
+                    })
+                    this.setState({
+                        typesData: typesData,
+                    })
+                }).catch(error => {
+                })
+            };
+
+            onChange = (e) => {
+                let typeIds = e.map(type => {
+                    return type.value
+                })
+                this.setState({
+                    typesSelected: typeIds
+                })
+            };
+
+            onUpdateTypesButtonClicked = e => {
+                e.preventDefault();
+                let inputData = {
+                    pokemon_id: this.props.pokemon.id
+                };
+
+                if(this.state.typesSelected.length) {
+                    inputData.types = this.state.typesSelected
+                };
+                
+                HTTPRequest.post({
+                    url: 'pokemon-type/set',
+                    token: this.props.appAuthentication.token,
+                    data: inputData
+                }).then(response => {
+                    if(response.data.code !== dataConstant.CODE_SUCCESS) {
+                        ToastMessage.showError({
+                            title: response.data.code,
+                            message: response.data.error
+                        })
+                    }
+                    ToastMessage.showSuccess({
+                        title: response.data.code,
+                        message: `${this.props.pokemon.name}'s types changed!'`
+                    })
+                    this.toggle();
+                    this.props.getPokemons();
+                }).catch(error => {
+                    ToastMessage.showError({
+                        title: "ERROR",
+                        message: "Update pokemon types failed!"
+                    })
+                })
+            };
+
+            componentDidMount(){
+                this.getTypes();
+            };
+
+            render() {
+                return (
+                    <div>
+                        <a href="#" className="text-dark" onClick={this.toggle}>
+                            <i className="fas fa-paw mr-2 text-secondary"></i>Change Types
+                        </a>
+                        <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
+                            <ModalHeader toggle={this.toggle}>
+                                Are you sure want to <code>change types </code> of&nbsp; 
+                                <span className="text-primary text-capitalize">
+                                {this.props.pokemon.name}</span>?
+                            </ModalHeader>
+                            <ModalBody className="">
+                                <div className="d-flex justify-content-around align-items-center">
+                                    <img src={this.props.pokemon.image}></img>
+                                    <div>
+                                        <label>Current:</label>
+                                        {
+                                            this.props.pokemon.types && JSON.parse(this.props.pokemon.types).sort().map((type, index) => {
+                                                return (
+                                                <div key={index}>{this.props._renderPokemonProperty(type, index)}</div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                                <Select isMulti options={this.state.typesData} onChange={this.onChange}/>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" onClick={this.onUpdateTypesButtonClicked}>CHANGE</Button>{' '}
+                                <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
+                            </ModalFooter>
+                        </Modal>
+                    </div>
+                )
+            };
+        }
+    )
+);
+
+export const UpdatePokemonWeaknessModal = withRouter(
+    connect(
+        (state) => ({
+            appAuthentication: state.appAuthentication.current
+        }),
+        (dispatch) => ({
+
+        })
+    )(
+        class UpdatePokemonWeaknessModalComponent extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    weaknessData: null,
+                    weaknessSelected: [],
+                    isOpen: false
+                }
+            };
+
+            toggle = () => {
+                this.setState({
+                    weaknessSelected: [],
+                    isOpen: !this.state.isOpen
+                })
+            };
+
+            getWeakness = () => {
+                HTTPRequest.get({
+                    url: 'properties/weakness',
+                    params: {}
+                }).then(response => {
+                    let weaknessData = response.data.data.map((weakness)=>{
+                        return {
+                            value: weakness.id,
+                            label: weakness.name
+                        }
+                    });
+                    this.setState({
+                        weaknessData: weaknessData,
+                    })
+                }).catch(error => {
+                })
+            };
+
+            onChange = (e) => {
+                let weaknessIds = e.map(weakness => {
+                    return weakness.value
+                })
+                this.setState({
+                    weaknessSelected: weaknessIds
+                })
+            };
+
+            onUpdateWeaknessButtonClicked = e => {
+                e.preventDefault();
+                let inputData = {
+                    pokemon_id: this.props.pokemon.id
+                };
+
+                if(this.state.weaknessSelected.length) {
+                    inputData.weakness = this.state.weaknessSelected
+                };
+
+                console.log(inputData)
+                
+                HTTPRequest.post({
+                    url: 'pokemon-weakness/set',
+                    token: this.props.appAuthentication.token,
+                    data: inputData
+                }).then(response => {
+                    if(response.data.code !== dataConstant.CODE_SUCCESS) {
+                        ToastMessage.showError({
+                            title: response.data.code,
+                            message: response.data.error
+                        })
+                    }
+                    ToastMessage.showSuccess({
+                        title: response.data.code,
+                        message: `${this.props.pokemon.name}'s weakness changed!'`
+                    })
+                    this.toggle();
+                    this.props.getPokemons();
+                }).catch(error => {
+                    ToastMessage.showError({
+                        title: "ERROR",
+                        message: "Update pokemon weakness failed!"
+                    })
+                })
+            };
+
+            componentDidMount(){
+                this.getWeakness();
+            };
+
+            render() {
+                console.log(this.state.weaknessSelected)
+                return (
+                    <div>
+                        <a href="#" className="text-dark" onClick={this.toggle}>
+                            <i className="fas fa-ghost mr-2 text-secondary"></i>Change Weakness
+                        </a>
+                        <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
+                            <ModalHeader toggle={this.toggle}>
+                                Are you sure want to <code>change weakness </code> of&nbsp;
+                                <span className="text-primary text-capitalize">
+                                {this.props.pokemon.name}</span>?
+                            </ModalHeader>
+                            <ModalBody className="">
+                                <div className="d-flex justify-content-around align-items-center">
+                                    <img src={this.props.pokemon.image}></img>
+                                    <div>
+                                        <label>Current:</label>
+                                        {
+                                            this.props.pokemon.weakness && JSON.parse(this.props.pokemon.weakness).sort().map((weakness, index) => {
+                                                return (
+                                                <div key={index}>{this.props._renderPokemonProperty(weakness, index)}</div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                                <Select isMulti options={this.state.weaknessData} onChange={this.onChange}/>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" onClick={this.onUpdateWeaknessButtonClicked}>CHANGE</Button>{' '}
+                                <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
+                            </ModalFooter>
+                        </Modal>
+                    </div>
+                )
+            };
+        }
+    )
+);
+
+export const UpdatePokemonAbilityModal = withRouter(
+    connect(
+        (state) => ({
+            appAuthentication: state.appAuthentication.current
+        }),
+        (dispatch) => ({
+
+        })
+    )(
+        class UpdatePokemonAbilityModalComponent extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    abilityData: null,
+                    abilitiesSelected: [],
+                    isOpen: false
+                }
+            };
+
+            toggle = () => {
+                this.setState({
+                    abilitiesSelected: [],
+                    isOpen: !this.state.isOpen
+                })
+            };
+
+            getAbilities = () => {
+                HTTPRequest.get({
+                    url: 'properties/ability',
+                    params: {}
+                }).then(response => {
+                    let abilityData = response.data.data.map((type)=>{
+                        return {
+                            value: type.id,
+                            label: type.name
+                        }
+                    })
+                    this.setState({
+                        abilityData: abilityData,
+                    })
+                }).catch(error => {
+                })
+            };
+
+            onChange = (e) => {
+                let abilityIds = e.map(ability => {
+                    return ability.value
+                })
+                this.setState({
+                    abilitiesSelected: abilityIds
+                })
+            };
+
+            onUpdateAbilitiesButtonClicked = e => {
+                e.preventDefault();
+                let inputData = {
+                    pokemon_id: this.props.pokemon.id
+                };
+
+                if(this.state.abilitiesSelected.length) {
+                    inputData.abilities = this.state.abilitiesSelected
+                };
+                
+                HTTPRequest.post({
+                    url: 'pokemon-ability/set',
+                    token: this.props.appAuthentication.token,
+                    data: inputData
+                }).then(response => {
+                    if(response.data.code !== dataConstant.CODE_SUCCESS) {
+                        ToastMessage.showError({
+                            title: response.data.code,
+                            message: response.data.error
+                        })
+                    }
+                    ToastMessage.showSuccess({
+                        title: response.data.code,
+                        message: `${this.props.pokemon.name}'s abilities changed!'`
+                    })
+                    this.toggle();
+                    this.props.getPokemons();
+                }).catch(error => {
+                    ToastMessage.showError({
+                        title: "ERROR",
+                        message: "Update pokemon abilities failed!"
+                    })
+                })
+            };
+
+            componentDidMount(){
+                this.getAbilities();
+            };
+
+            render() {
+                return (
+                    <div>
+                        <a href="#" className="text-dark" onClick={this.toggle}>
+                            <i className="fab fa-superpowers mr-2 text-secondary"></i>Change Abilities
+                        </a>
+                        <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
+                            <ModalHeader toggle={this.toggle}>
+                                Are you sure want to <code>change abilities </code> of&nbsp; 
+                                <span className="text-primary text-capitalize">
+                                {this.props.pokemon.name}</span>?
+                            </ModalHeader>
+                            <ModalBody className="">
+                                <div className="d-flex justify-content-around align-items-center">
+                                    <img src={this.props.pokemon.image}></img>
+                                    <div>
+                                        <label>Current:</label>
+                                        {
+                                            this.props.pokemon.abilities && JSON.parse(this.props.pokemon.abilities).sort().map((ability, index) => 
+                                                <PokemonAbilityComponent ability_id={ability} key={index}/>
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                                <Select isMulti options={this.state.abilityData} onChange={this.onChange}/>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" onClick={this.onUpdateAbilitiesButtonClicked}>CHANGE</Button>{' '}
+                                <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
+                            </ModalFooter>
+                        </Modal>
+                    </div>
+                )
+            };
+        }
+    )
+);

@@ -22,7 +22,10 @@ import PokemonAbilityComponent from './PokemonAbility';
 
 import {
     UpdatePokemonStatusModal,
-    PokemonImageModal
+    PokemonImageModal,
+    UpdatePokemonTypeModal,
+    UpdatePokemonWeaknessModal,
+    UpdatePokemonAbilityModal,
 } from './PokemonModals';
 
 import "./Pokemon.css";
@@ -296,19 +299,24 @@ class PokemonComponent extends React.Component {
                             </Link>
                         </DropdownItem>
                         <DropdownItem>
-                            <Link to="" href="#" className="text-dark" onClick={()=>{}}>
-                                <i className="fas fa-paw mr-2 text-secondary"></i>Change Types
-                            </Link>
+                            <UpdatePokemonTypeModal 
+                                pokemon={pokemon}
+                                getPokemons={()=>this.getPokemons()}
+                                _renderPokemonProperty={(type, index)=>this._renderPokemonProperty(type, index)}
+                            />
                         </DropdownItem>
                         <DropdownItem>
-                            <Link to="" href="#" className="text-dark" onClick={()=>{}}>
-                                <i className="fas fa-ghost mr-2 text-secondary"></i>Change Weakness
-                            </Link>
+                            <UpdatePokemonWeaknessModal 
+                                pokemon={pokemon}
+                                getPokemons={()=>this.getPokemons()}
+                                _renderPokemonProperty={(type, index)=>this._renderPokemonProperty(type, index)}
+                            />
                         </DropdownItem>
                         <DropdownItem>
-                            <Link to="" href="#" className="text-dark" onClick={()=>{}}>
-                                <i className="fab fa-superpowers mr-2 text-secondary"></i>Change Abilities
-                            </Link>
+                            <UpdatePokemonAbilityModal 
+                                pokemon={pokemon}
+                                getPokemons={()=>this.getPokemons()}
+                            />
                         </DropdownItem>
                         <DropdownItem>
                             <PokemonImageModal
