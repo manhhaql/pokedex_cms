@@ -10,6 +10,8 @@ import {
     DropdownItem
 } from 'reactstrap';
 
+import Select from 'react-select';
+
 import HTTPRequest from 'helper/httpRequest';
 
 import * as routeNameConstant from 'constant/routeName';
@@ -103,9 +105,15 @@ class PokemonComponent extends React.Component {
             params: {}
         }).then(response => {
             if(this._isMounted) {
+                let typeData = response.data.data.map((type)=>{
+                    return {
+                        value: type.id,
+                        label: type.name
+                    }
+                });
                 this.setState({
                     filterData: Object.assign({}, this.state.filterData, {
-                        types: response.data.data
+                        types: typeData
                     }),
                 })
             }
@@ -119,9 +127,15 @@ class PokemonComponent extends React.Component {
             params: {}
         }).then(response => {
             if(this._isMounted) {
+                let weaknessData = response.data.data.map((weakness)=>{
+                    return {
+                        value: weakness.id,
+                        label: weakness.name
+                    }
+                });
                 this.setState({
                     filterData: Object.assign({}, this.state.filterData, {
-                        weakness: response.data.data
+                        weakness: weaknessData
                     }),
                 })
             }
@@ -135,9 +149,15 @@ class PokemonComponent extends React.Component {
             params: {}
         }).then(response => {
             if(this._isMounted) {
+                let abilityData = response.data.data.map((ability)=>{
+                    return {
+                        value: ability.id,
+                        label: ability.name
+                    }
+                });
                 this.setState({
                     filterData: Object.assign({}, this.state.filterData, {
-                        abilities: response.data.data
+                        abilities: abilityData
                     }),
                 })
             }
@@ -165,29 +185,28 @@ class PokemonComponent extends React.Component {
         });
     };
 
-    onChangeFilterByType(type_id) {
+    onChangeFilterByType = (e) => {
         this.setState({
-            params: Object.assign({}, this.state.params, {
-                type_id: type_id
+                params: Object.assign({}, this.state.params, {
+                type_id: e.value
             })
-        },() => {
-            this.getPokemons();
-        }, () => {
+        }, ()=> {
+            this.getPokemons()
         });
     };
-    onChangeFilterByWeakness(weakness_id) {
+    onChangeFilterByWeakness = (e) => {
         this.setState({
             params: Object.assign({}, this.state.params, {
-                weakness_id: weakness_id
+                weakness_id: e.value
             })
         }, () => {
             this.getPokemons();
         });
     };
-    onChangeFilterByAbility(ability_id) {
+    onChangeFilterByAbility = (e) => {
         this.setState({
             params: Object.assign({}, this.state.params, {
-                ability_id: ability_id
+                ability_id: e.value
             })
         }, () => {
             this.getPokemons();
@@ -493,15 +512,7 @@ class PokemonComponent extends React.Component {
                             <label className="form-control-plaintext">
                                 By Type
                             </label>
-                            <select className="form-control selector" onChange={(event) => this.onChangeFilterByType(event.target.value)}>
-                                <option value=''>Select</option>
-                                {
-                                    this.state.filterData.types && this.state.filterData.types.map((type, index) => {
-                                        return <option value={parseInt(type.id)} key={index}>{
-                                        type.name}</option>
-                                    })
-                                }
-                            </select>
+                            <Select options={this.state.filterData.types} onChange={this.onChangeFilterByType}/>
                         </div>
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
@@ -509,14 +520,7 @@ class PokemonComponent extends React.Component {
                             <label className="form-control-plaintext">
                                 By Weakness
                             </label>
-                            <select className="form-control selector" onChange={(event) => this.onChangeFilterByWeakness(event.target.value)}>
-                                <option value=''>Select</option>
-                                {
-                                    this.state.filterData.weakness && this.state.filterData.weakness.map((weakness, index) => {
-                                        return <option value={parseInt(weakness.id)} key={index}>{weakness.name}</option>
-                                    })
-                                }
-                            </select>
+                            <Select options={this.state.filterData.weakness} onChange={this.onChangeFilterByWeakness}/>
                         </div>
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
@@ -524,15 +528,7 @@ class PokemonComponent extends React.Component {
                             <label className="form-control-plaintext">
                                 By Ability
                             </label>
-                            <select className="form-control selector" onChange={(event) => this.onChangeFilterByAbility(event.target.value)}>
-                                <option value=''>Select</option>
-                                {
-                                    this.state.filterData.abilities && this.state.filterData.abilities.map((ability, index) => {
-                                        return <option value={parseInt(ability.id)} key={index}>{
-                                        ability.name}</option>
-                                    })
-                                }
-                            </select>
+                            <Select options={this.state.filterData.abilities} onChange={this.onChangeFilterByAbility}/>
                         </div>
                     </div>
                 </div>

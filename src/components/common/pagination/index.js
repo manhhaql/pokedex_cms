@@ -108,7 +108,7 @@ class PaginationComponent extends React.Component {
                         <PaginationLink last/>
                     </PaginationItem>
                 </Pagination>
-                <div className='toolbar d-flex align-items-center'>
+                <div className='toolbar d-flex'>
                     <select className='form-control mr-2' style={{ width: 70 }} value={this.props.limit} onChange={(event) => this.onChangeLimit(event)} >
                         {
                             this.props.limits.map((limit, index) => {
