@@ -12,12 +12,28 @@ import MainRoutes from './MainRoutes';
 import "./Main.css";
 
 class MainComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            sidebarOpen: false
+        };
+    };
+
+    toggleSidebar = () => {
+        this.setState({
+            sidebarOpen: !this.state.sidebarOpen
+        });
+    };
+
     render() {
         return (
             <div className="Main">
-                <HeaderComponent/>
+                <HeaderComponent toggleSidebar={this.toggleSidebar}/>
                 <div className="Main-wrapper">
-                    <SidebarComponent/>
+                    <SidebarComponent 
+                        sidebarOpen={this.state.sidebarOpen}
+                        toggleSidebar={this.toggleSidebar}
+                    />
                     <div className="Main-content">
                         {renderRoutes(MainRoutes)}
                     </div>

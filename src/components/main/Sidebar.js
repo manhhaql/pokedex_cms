@@ -5,7 +5,7 @@ import * as routeNameConstant from'constant/routeName';
 
 const SidebarComponent = (props) => {
     return (
-        <div className="Sidebar">
+        <div className={`Sidebar ${props.sidebarOpen ? "open" : ""}`}>
             <div className="Sidebar-logo">
                 <div>
                     <div className="Sidebar-logo__img">
@@ -18,19 +18,19 @@ const SidebarComponent = (props) => {
             </div>
             <ul className="Sidebar-list list-unstyled">
                 <li className="Sidebar-list__item">
-                    <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_DASHBOARD}`}>
+                    <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_DASHBOARD}`} onClick={()=>props.toggleSidebar()}>
                         <i className="fas fa-chart-pie mr-2 fa-2x"></i>
                         Dashboard
                     </Link>
                 </li>
                 <li className="Sidebar-list__item">
-                    <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}`}>
+                    <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}`} onClick={()=>props.toggleSidebar()}>
                         <i className="fas fa-dragon mr-2 fa-2x"></i>
                         Pokemon
                     </Link>
                 </li>
                 <li className="Sidebar-list__item">
-                    <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_USERS}`}>
+                    <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_USERS}`} onClick={()=>props.toggleSidebar()}>
                         <i className="fas fa-users mr-2 fa-2x"></i>
                         Users
                     </Link>

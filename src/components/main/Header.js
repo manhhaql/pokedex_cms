@@ -60,7 +60,7 @@ class HeaderComponent extends React.Component {
         };
         return (
             <Navbar className="Header">
-                {/* <NavbarBrand className="Header-brand" href="/" style={{zIndex:2}}>Pokemon</NavbarBrand> */}
+                <NavbarBrand className="Header-brand" onClick={()=>this.props.toggleSidebar()}>&#9776;</NavbarBrand>
                 <Nav className="ml-auto">
                     <NavItem className="mr-2">
                         <NavbarText>

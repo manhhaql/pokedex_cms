@@ -536,8 +536,6 @@ export const UpdatePokemonWeaknessModal = withRouter(
                 if(this.state.weaknessSelected.length) {
                     inputData.weakness = this.state.weaknessSelected
                 };
-
-                console.log(inputData)
                 
                 HTTPRequest.post({
                     url: 'pokemon-weakness/set',
@@ -569,7 +567,6 @@ export const UpdatePokemonWeaknessModal = withRouter(
             };
 
             render() {
-                console.log(this.state.weaknessSelected)
                 return (
                     <div>
                         <a href="#" className="text-dark" onClick={this.toggle}>

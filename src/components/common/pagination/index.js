@@ -16,7 +16,6 @@ class PaginationComponent extends React.Component {
 
     onChangePage(event, page) {
         event.preventDefault();
-        console.log("CLICKED!")
         this.props.onChangePage(page);
     };
     onChangeLimit(event) {
