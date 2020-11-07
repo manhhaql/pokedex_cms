@@ -280,6 +280,10 @@ class PokemonComponent extends React.Component {
             </Badge>
         )
     };
+    _renderPokemonAbility(abilities, index) {
+        let array = JSON.parse(abilities);
+        return array.map((ability, index)=> <PokemonAbilityComponent ability={ability} key={index}/>)
+    };
     _renderPokemonGender(gender, index) {
         return (
             <span key={index}>
@@ -445,9 +449,7 @@ class PokemonComponent extends React.Component {
             },
             {
                 th: "Abilities",
-                td: (pokemon, index) => pokemon.abilities ? 
-                                        JSON.parse(pokemon.abilities).sort().map((ability_id, index) => <PokemonAbilityComponent ability_id={ability_id} key={index}/>) : 
-                                        null,
+                td: (pokemon, index) => pokemon.abilities && this._renderPokemonAbility(pokemon.abilities, index),
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'ability'

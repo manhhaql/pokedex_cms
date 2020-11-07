@@ -1,72 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Tooltip } from 'reactstrap';
 
 import HTTPRequest from 'helper/httpRequest';
 
-
-
-class PokemonAbilityComponent extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            ability: null,
-            isOpen: false
-        }
-        this._isMounted = false
-    };
-
-    toggle() {
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
-    };
-    
-
-    componentDidMount() {
-        this._isMounted = true;
-
-        HTTPRequest.get({
+const PokemonAbilityComponent = (props) => {
+    let _isMounted = useRef(false);
+    const [ability, setAbility] = useState({});
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+  
+    const toggle = () => setTooltipOpen(!tooltipOpen);
+    async function getAbility() {
+        await HTTPRequest.get({
             url: 'properties/ability',
             params: {
-                id: this.props.ability_id
+                id: props.ability
             }
         }).then(response => {
-            if(this._isMounted) {
-                this.setState({
-                    ability: response.data.data[0] 
-                })
+            if(_isMounted) {
+                setAbility(response.data.data[0])
             }
         }).catch(error => {
             console.log(error)
         })
-    };
-
-    componentWillUnmount() {
-        this._isMounted = false
-    };
-
-    render() {
-        return (
-            <div>
-                {
-                    this.state.ability && (
-                    <div>
-                        <span className="Pokemon-ability__text" id={`Ability-${this.state.ability.id}`}>
-                            {this.state.ability.name}
-                        </span>
-                        <Tooltip placement="right" 
-                                isOpen={this.state.isOpen} 
-                                target={`Ability-${this.state.ability.id}`} 
-                                toggle={()=>this.toggle()}
-                        >
-                            {this.state.ability.description}                    
-                        </Tooltip>
-                    </div>
-                    )
-                }
-            </div>
-        )
     }
-};
+
+    useEffect(()=>{
+        _isMounted = true;
+        getAbility();
+        return () => {
+            _isMounted = false
+        }
+    });
+    return (
+      <div>
+        {
+            ability && (
+            <div>
+                <span className="Pokemon-ability__text" id={`Ability-${ability.id}`}>
+                    {ability.name}
+                </span>
+                <Tooltip placement="right" 
+                        isOpen={tooltipOpen}
+                        target={`Ability-${ability.id}`} 
+                        toggle={toggle}
+                >
+                    {ability.description}                    
+                </Tooltip>
+            </div>
+            )
+        }
+      </div>
+    );
+  }
 
 export default PokemonAbilityComponent;
