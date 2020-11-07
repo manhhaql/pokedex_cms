@@ -51,7 +51,7 @@ class PokemonAbilityComponent extends React.Component {
                 {
                     this.state.ability && (
                     <div>
-                        <span className="Pokemon-ability__text" href="#" id={`Ability-${this.state.ability.id}`}>
+                        <span className="Pokemon-ability__text" id={`Ability-${this.state.ability.id}`}>
                             {this.state.ability.name}
                         </span>
                         <Tooltip placement="right" 

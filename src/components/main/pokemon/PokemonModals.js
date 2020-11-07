@@ -83,7 +83,7 @@ export const UpdatePokemonStatusModal = withRouter(
                         {
                             this.props.pokemon.status === dataConstant.STATUS_ACTIVE && (
                                 <span>
-                                    <a href="#" className="text-dark" onClick={this.toggle}>
+                                    <a  className="text-dark" onClick={this.toggle}>
                                         <i className="fas fa-lock mr-2 text-danger"></i>Deactivate
                                     </a>
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
@@ -109,7 +109,7 @@ export const UpdatePokemonStatusModal = withRouter(
                         {
                             this.props.pokemon.status === dataConstant.STATUS_INACTIVE && (
                                 <span>
-                                    <a href="#" className="text-dark" onClick={this.toggle}>
+                                    <a  className="text-dark" onClick={this.toggle}>
                                         <i className="fas fa-lock-open mr-2 text-success"></i>Reactivate
                                     </a>
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
@@ -256,7 +256,7 @@ export const PokemonImageModal = withRouter(
                         {
                             !!this.props.pokemon.image && (
                                 <span>
-                                    <a href="#" className="text-dark" onClick={this.toggle}>
+                                    <a  className="text-dark" onClick={this.toggle}>
                                         <i className="fas fa-image mr-2 text-secondary"></i>Change image
                                     </a>
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
@@ -302,7 +302,7 @@ export const PokemonImageModal = withRouter(
                         {
                             !this.props.pokemon.image && (
                                 <span>
-                                    <a href="#" className="text-dark" onClick={this.toggle}>
+                                    <a  className="text-dark" onClick={this.toggle}>
                                         <i className="fas fa-image mr-2 text-secondary"></i>Add image
                                     </a>
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
@@ -437,7 +437,7 @@ export const UpdatePokemonTypeModal = withRouter(
             render() {
                 return (
                     <div>
-                        <a href="#" className="text-dark" onClick={this.toggle}>
+                        <a  className="text-dark" onClick={this.toggle}>
                             <i className="fas fa-paw mr-2 text-secondary"></i>Change Types
                         </a>
                         <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
@@ -569,7 +569,7 @@ export const UpdatePokemonWeaknessModal = withRouter(
             render() {
                 return (
                     <div>
-                        <a href="#" className="text-dark" onClick={this.toggle}>
+                        <a  className="text-dark" onClick={this.toggle}>
                             <i className="fas fa-ghost mr-2 text-secondary"></i>Change Weakness
                         </a>
                         <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
@@ -701,7 +701,7 @@ export const UpdatePokemonAbilityModal = withRouter(
             render() {
                 return (
                     <div>
-                        <a href="#" className="text-dark" onClick={this.toggle}>
+                        <a  className="text-dark" onClick={this.toggle}>
                             <i className="fab fa-superpowers mr-2 text-secondary"></i>Change Abilities
                         </a>
                         <Modal isOpen={this.state.isOpen} toggle={this.toggle} >

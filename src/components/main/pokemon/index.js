@@ -313,7 +313,7 @@ class PokemonComponent extends React.Component {
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem>
-                            <Link to="" href="#" className="text-dark" onClick={()=>{}}>
+                            <Link to="" className="text-dark" onClick={()=>{}}>
                                 <i className="fas fa-edit mr-2 text-secondary"></i>Edit Generals
                             </Link>
                         </DropdownItem>

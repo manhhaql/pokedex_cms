@@ -82,7 +82,7 @@ class HeaderComponent extends React.Component {
                                     </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem className=" text-center">
-                                        <Link to="" className="text-danger" href="#" onClick={this.onLogoutClicked}><i className="fas fa-power-off mr-2"></i>Logout</Link>
+                                        <Link to="" className="text-danger" onClick={this.onLogoutClicked}><i className="fas fa-power-off mr-2"></i>Logout</Link>
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>

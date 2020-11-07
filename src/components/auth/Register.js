@@ -8,6 +8,7 @@ import {loadAuthData} from 'store/auth/actions';
 
 import * as localStorageItemConstant from 'constant/localStorageItem';
 import * as routeNameConstant from 'constant/routeName';
+import * as dataConstant from 'constant/data';
 
 import {
     Button,
@@ -27,7 +28,7 @@ class RegisterComponent extends React.Component {
         email: '',
         password: '',
         password_check:'',
-        type: 1
+        type: dataConstant.USER_GUEST
     };
 
     onInputChange = e => {

@@ -60,7 +60,7 @@ class PaginationComponent extends React.Component {
                             </PaginationItem>
                         )
                     }
-                    <PaginationItem active>
+                    <PaginationItem active style={{zIndex:0}}>
                         <PaginationLink >
                             {this.props.page}
                         </PaginationLink>
