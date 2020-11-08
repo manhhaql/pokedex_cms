@@ -716,7 +716,7 @@ export const UpdatePokemonAbilityModal = withRouter(
                                     <div>
                                         <label>Current:</label>
                                         {
-                                            this.props.pokemon.abilities && JSON.parse(this.props.pokemon.abilities).sort().map((ability, index) => 
+                                            this.props.pokemon.abilities && this.props.pokemon.abilities.map((ability, index) => 
                                                 <PokemonAbilityComponent ability_id={ability} key={index}/>
                                             )
                                         }
