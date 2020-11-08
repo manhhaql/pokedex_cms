@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom';
 
 import HTTPRequest from 'helper/httpRequest';
 
@@ -20,7 +20,6 @@ import {
     DropdownItem,
     NavbarText
 } from 'reactstrap';
-import { withRouter } from 'react-router';
 
 class HeaderComponent extends React.Component {
     constructor(props) {

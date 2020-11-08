@@ -64,7 +64,7 @@ class UsersComponent extends React.Component {
         }
         HTTPRequest.get({
             url: 'users/',
-            token: this.props.appAuthentication.token,
+            token: this.props.appAuthentication && this.props.appAuthentication.token,
             params: {
                 page: this.state.params.page,
                 limit: this.state.params.limit,

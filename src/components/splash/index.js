@@ -56,15 +56,8 @@ class SplashComponent extends React.Component {
             }); 
         } else {
             this.props.loadAuthData(null);
-            if(currentPath) {
-                localStorage.removeItem(localStorageItemConstant.LOCAL_STORAGE_ITEM_CURRENT_PATH);
-                if(currentPath.indexOf('//') > - 1) {
-                    currentPath = `/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`
-                }
-                this.props.history.replace(currentPath);
-            } else {
-                this.props.history.replace(`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`);
-            }
+            localStorage.removeItem(localStorageItemConstant.LOCAL_STORAGE_ITEM_CURRENT_PATH);
+            this.props.history.replace(`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`);
         }
     };
 

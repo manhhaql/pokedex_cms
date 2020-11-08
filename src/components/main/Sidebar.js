@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 
 import * as routeNameConstant from'constant/routeName';
+import * as dataConstant from 'constant/data';
 
 const SidebarComponent = (props) => {
     return (
@@ -29,15 +31,26 @@ const SidebarComponent = (props) => {
                         Pokemon
                     </Link>
                 </li>
-                <li className="Sidebar-list__item">
-                    <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_USERS}`} onClick={()=>props.toggleSidebar()}>
-                        <i className="fas fa-users mr-2 fa-2x"></i>
-                        Users
-                    </Link>
-                </li>
+                {
+                    props.appAuthentication && props.appAuthentication.user.type === dataConstant.USER_ADMIN && (
+                        <li className="Sidebar-list__item">
+                            <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_USERS}`} onClick={()=>props.toggleSidebar()}>
+                                <i className="fas fa-users mr-2 fa-2x"></i>
+                                Users
+                            </Link>
+                        </li>
+                    )
+                }
             </ul>
         </div>
     );
 }
 
-export default SidebarComponent;
+const mapStateToProps = (state) => ({
+    appAuthentication: state.appAuthentication.current
+});
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarComponent));

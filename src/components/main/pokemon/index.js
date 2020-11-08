@@ -379,7 +379,7 @@ class PokemonComponent extends React.Component {
             },
             {
                 th: "Action",
-                td: (pokemon, index) => this._renderActionColumn(pokemon),
+                td: (pokemon, index) => this.props.appAuthentication.user.type === dataConstant.USER_ADMIN && this._renderActionColumn(pokemon),
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'action'
@@ -551,7 +551,7 @@ class PokemonComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-
+    appAuthentication: state.appAuthentication.current
 });
 
 const mapDispatchToProps = (dispatch) => ({

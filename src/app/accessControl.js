@@ -20,15 +20,15 @@ class AccessControl {
             this.browserHistory.push(`/${routeNameConstant.ROUTE_NAME_MAIN}`);
             return;
         }
-        if (pathname.indexOf(`${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_USERS}`) > -1 && state.appAuthentication.current.user.type === dataConstant.USER_GUEST) {
-            this.browserHistory.push(`/${routeNameConstant.ROUTE_NAME_MAIN}`);
-            return;
-        }
         if (pathname.indexOf(`${routeNameConstant.ROUTE_NAME_AUTH}`) > -1 && !state.appAuthentication.current) {
             return;
         }
-        if ((pathname.indexOf(`/${routeNameConstant.ROUTE_NAME_MAIN}`) > -1) && !state.appAuthentication.current) {
+        if (pathname.indexOf(`${routeNameConstant.ROUTE_NAME_MAIN}/`) > -1 && !state.appAuthentication.current) {
             this.browserHistory.push(`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`);
+            return;
+        }
+        if (pathname.indexOf(`${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_USERS}`) > -1 && state.appAuthentication.current.user.type === dataConstant.USER_GUEST) {
+            this.browserHistory.push(`/${routeNameConstant.ROUTE_NAME_MAIN}`);
             return;
         }
         if (!state.appAuthentication.current) {
