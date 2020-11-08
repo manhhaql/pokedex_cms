@@ -1,8 +1,8 @@
 export const CODE_SUCCESS = "SUCCESS";
 export const CODE_ERROR = "ERROR";
 
-export const STATUS_ACTIVE = 0;
-export const STATUS_INACTIVE = 1;
+export const STATUS_ACTIVE = 1;
+export const STATUS_INACTIVE = 2;
 
 export const USER_ADMIN = 1;
 export const USER_GUEST = 2;
