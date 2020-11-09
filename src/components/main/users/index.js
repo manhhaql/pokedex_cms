@@ -14,7 +14,6 @@ import Select from 'react-select';
 
 import HTTPRequest from 'helper/httpRequest';
 
-import * as routeNameConstant from 'constant/routeName';
 import * as dataConstant from 'constant/data';
 
 import TableCommonComponent from 'components/common/table';

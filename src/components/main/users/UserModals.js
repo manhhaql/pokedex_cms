@@ -81,9 +81,9 @@ export const UpdateUserStatusModal = withRouter(
                         {
                             this.props.user.status === dataConstant.STATUS_ACTIVE && (
                                 <span>
-                                    <a  className="text-dark" onClick={this.toggle}>
+                                    <Label className="text-dark" onClick={this.toggle}>
                                         <i className="fas fa-lock mr-2 text-danger"></i>Deactivate
-                                    </a>
+                                    </Label>
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>deactivate </code> 
@@ -106,9 +106,9 @@ export const UpdateUserStatusModal = withRouter(
                         {
                             this.props.user.status === dataConstant.STATUS_INACTIVE && (
                                 <span>
-                                    <a className="text-dark" onClick={this.toggle}>
+                                    <Label className="text-dark" onClick={this.toggle}>
                                         <i className="fas fa-lock-open mr-2 text-success"></i>Reactivate
-                                    </a>
+                                    </Label>
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>reactivate </code> 
@@ -194,9 +194,9 @@ export const UpdateUserTypeModal = withRouter(
                         {
                             this.props.user.type === dataConstant.USER_ADMIN && (
                                 <span>
-                                    <a  className="text-dark" onClick={this.toggle}>
+                                    <Label  className="text-dark" onClick={this.toggle}>
                                         <i className="fas fa-user mr-2 text-secondary"></i>Set Type Guest
-                                    </a>
+                                    </Label>
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>set as Guest </code> 
@@ -219,9 +219,9 @@ export const UpdateUserTypeModal = withRouter(
                         {
                             this.props.user.type === dataConstant.USER_GUEST && (
                                 <span>
-                                    <a className="text-dark" onClick={this.toggle}>
+                                    <Label className="text-dark" onClick={this.toggle}>
                                         <i className="fas fa-user mr-2 text-secondary"></i>Set Type Admin
-                                    </a>
+                                    </Label>
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>set Admin </code> 

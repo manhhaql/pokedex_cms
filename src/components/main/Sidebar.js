@@ -11,7 +11,7 @@ const SidebarComponent = (props) => {
             <div className="Sidebar-logo">
                 <div>
                     <div className="Sidebar-logo__img">
-                        <img alt="" src="https://storage.googleapis.com/hapokedex.appspot.com/public/pokeball48.png" alt="react-logo" />
+                        <img alt="" src="https://storage.googleapis.com/hapokedex.appspot.com/public/pokeball48.png"/>
                     </div>
                     <div className="Sidebar-logo__text">
                         Pokedex

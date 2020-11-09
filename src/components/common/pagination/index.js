@@ -119,7 +119,7 @@ class PaginationComponent extends React.Component {
                         }
                     </select>
                     <span className='text-secondary'>
-                        {`Total ${this.props.limit > this.props.total ? this.props.total : this.props.limit, this.props.total}${this.props.total > 1 ? " results" : " result"}.` }
+                        {`Total ${this.props.total}${this.props.total > 1 ? " results" : " result"}.` }
                     </span>
                 </div>
             </div>

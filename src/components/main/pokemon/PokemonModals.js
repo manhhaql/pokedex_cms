@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import * as dataConstant from 'constant/data';
 
@@ -93,7 +93,7 @@ export const UpdatePokemonStatusModal = withRouter(
                                                 {this.props.pokemon.name}</span>?
                                         </ModalHeader>
                                         <ModalBody className="text-center">
-                                            <img src={this.props.pokemon.image}></img>
+                                            <img src={this.props.pokemon.image} alt=""></img>
                                             <div>
                                                 <span className="text-primary text-capitalize">{this.props.pokemon.name}</span> will no longer appear on website, you can reactivate it anytime.
                                             </div>
@@ -119,7 +119,7 @@ export const UpdatePokemonStatusModal = withRouter(
                                                 {this.props.pokemon.name}</span>?
                                         </ModalHeader>
                                         <ModalBody className="text-center">
-                                            <img src={this.props.pokemon.image}></img>
+                                            <img src={this.props.pokemon.image} alt=""></img>
                                             <div>
                                                 <span className="text-primary text-capitalize">{this.props.pokemon.name}</span> will now appear on website.
                                             </div>
@@ -267,11 +267,11 @@ export const PokemonImageModal = withRouter(
                                         </ModalHeader>
                                         <ModalBody>
                                             <div className="d-flex justify-content-center align-items-center">
-                                                <img src={this.props.pokemon.image}></img>
+                                                <img src={this.props.pokemon.image} alt=""></img>
                                                 <i className="fas fa-arrow-right text-danger fa-2x"></i>
                                                 {
                                                     this.state.file && (
-                                                        <img src={URL.createObjectURL(this.state.file)} />
+                                                        <img src={URL.createObjectURL(this.state.file)} alt=""/>
                                                     )
                                                 }
                                                 {
@@ -302,9 +302,9 @@ export const PokemonImageModal = withRouter(
                         {
                             !this.props.pokemon.image && (
                                 <span>
-                                    <a className="text-dark" onClick={this.toggle}>
+                                    <Label className="text-dark" onClick={this.toggle}>
                                         <i className="fas fa-image mr-2 text-secondary"></i>Add image
-                                    </a>
+                                    </Label>
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>add image for </code>
@@ -314,7 +314,7 @@ export const PokemonImageModal = withRouter(
                                         <ModalBody className="text-center">
                                             {
                                                 this.state.file && (
-                                                    <img src={URL.createObjectURL(this.state.file)}></img>
+                                                    <img src={URL.createObjectURL(this.state.file)} alt=""></img>
                                                 )
                                             }
                                             <FormGroup row>
@@ -448,7 +448,7 @@ export const UpdatePokemonTypeModal = withRouter(
                             </ModalHeader>
                             <ModalBody className="">
                                 <div className="d-flex justify-content-around align-items-center">
-                                    <img src={this.props.pokemon.image}></img>
+                                    <img src={this.props.pokemon.image} alt=""></img>
                                     <div>
                                         <label>Current:</label>
                                         {
@@ -580,7 +580,7 @@ export const UpdatePokemonWeaknessModal = withRouter(
                             </ModalHeader>
                             <ModalBody className="">
                                 <div className="d-flex justify-content-around align-items-center">
-                                    <img src={this.props.pokemon.image}></img>
+                                    <img src={this.props.pokemon.image} alt=""></img>
                                     <div>
                                         <label>Current:</label>
                                         {
@@ -712,7 +712,7 @@ export const UpdatePokemonAbilityModal = withRouter(
                             </ModalHeader>
                             <ModalBody className="">
                                 <div className="d-flex justify-content-around align-items-center">
-                                    <img src={this.props.pokemon.image}></img>
+                                    <img src={this.props.pokemon.image} alt=""></img>
                                     <div>
                                         <label>Current:</label>
                                         {
