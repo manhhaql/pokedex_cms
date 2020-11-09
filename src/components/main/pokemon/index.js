@@ -29,6 +29,7 @@ import {
     UpdatePokemonTypeModal,
     UpdatePokemonWeaknessModal,
     UpdatePokemonAbilityModal,
+    UpdatePokemonGeneralModal
 } from './PokemonModals';
 
 import "./Pokemon.css";
@@ -328,9 +329,10 @@ class PokemonComponent extends React.Component {
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem>
-                            <Link to="" className="text-dark" onClick={()=>{}}>
-                                <i className="fas fa-edit mr-2 text-secondary"></i>Edit Generals
-                            </Link>
+                            <UpdatePokemonGeneralModal 
+                                pokemon={pokemon}
+                                getPokemons={()=>this.getPokemons()}
+                            />
                         </DropdownItem>
                         <DropdownItem>
                             <UpdatePokemonTypeModal 
@@ -360,22 +362,10 @@ class PokemonComponent extends React.Component {
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem className="text-center">
-                            {
-                                pokemon.status === dataConstant.STATUS_ACTIVE && (
-                                    <UpdatePokemonStatusModal 
-                                        pokemon={pokemon}
-                                        getPokemons={()=>this.getPokemons()}
-                                    />
-                                )
-                            }
-                            {
-                                pokemon.status === dataConstant.STATUS_INACTIVE && (
-                                    <UpdatePokemonStatusModal 
-                                        pokemon={pokemon}
-                                        getPokemons={()=>this.getPokemons()}
-                                    />
-                                )
-                            }
+                            <UpdatePokemonStatusModal 
+                                pokemon={pokemon}
+                                getPokemons={()=>this.getPokemons()}
+                            />
                         </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>
