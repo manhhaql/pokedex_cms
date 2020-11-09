@@ -7,7 +7,8 @@ import {
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    Button
 } from 'reactstrap';
 
 import Select from 'react-select';
@@ -166,6 +167,20 @@ class PokemonComponent extends React.Component {
         })
     };
 
+    onReload = () => {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                page: 1,
+                limit: 5,
+                type_id: null,
+                weakness_id: null,
+                ability_id: null
+            })
+        }, ()=> {
+            this.getPokemons();
+        })
+    };
+
     onChangePage(page) {
         this.setState({
             params: Object.assign({}, this.state.params, {
@@ -186,11 +201,11 @@ class PokemonComponent extends React.Component {
     };
 
     onChangeFilterByType = (e) => {
-        this.setState({
-                params: Object.assign({}, this.state.params, {
+        this.setState( prevState => ({
+                params: Object.assign({}, prevState.params, {
                 type_id: e.value
             })
-        }, ()=> {
+        }), ()=> {
             this.getPokemons()
         });
     };
@@ -501,16 +516,36 @@ class PokemonComponent extends React.Component {
     };
 
     render() {
+        let params = this.state.params;
+        let filterData = this.state.filterData;
+        let typeLabel = filterData.types && filterData.types.filter(a=> a.value === params.type_id)
+        .map(a=> a.label);
+        let weaknessLabel = filterData.weakness && filterData.weakness.filter(a=> a.value === params.weakness_id)
+        .map(a=> a.label);
+        let abilityLabel = filterData.abilities && filterData.abilities.filter(a=> a.value === params.ability_id)
+        .map(a=> a.label);
         return (
             <div>
+                <div className="d-flex justify-content-between">
                 <h2 className="text-secondary">Pokemon Table</h2>
+                <div>
+                    <Button color="success" className="mr-2"><i className="far fa-plus-square"></i> Add new Pokemon</Button>
+                    <Button color="success" onClick={this.onReload}><i className="fas fa-sync-alt"></i></Button>
+                </div>
+                </div>
                 <div className="row">
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
                         <div className='form-group'>
                             <label className="form-control-plaintext">
                                 By Type
                             </label>
-                            <Select options={this.state.filterData.types} onChange={this.onChangeFilterByType}/>
+                            <Select 
+                                value={{
+                                    label: typeLabel && typeLabel.length ? typeLabel : <div className="text-secondary">Select...</div>
+                                }} 
+                                options={this.state.filterData.types} 
+                                onChange={this.onChangeFilterByType}
+                            />
                         </div>
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
@@ -518,7 +553,13 @@ class PokemonComponent extends React.Component {
                             <label className="form-control-plaintext">
                                 By Weakness
                             </label>
-                            <Select options={this.state.filterData.weakness} onChange={this.onChangeFilterByWeakness}/>
+                            <Select 
+                                value={{
+                                    label: weaknessLabel && weaknessLabel.length ? weaknessLabel : <div className="text-secondary">Select...</div>
+                                }}
+                                options={this.state.filterData.weakness} 
+                                onChange={this.onChangeFilterByWeakness}
+                            />
                         </div>
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
@@ -526,7 +567,13 @@ class PokemonComponent extends React.Component {
                             <label className="form-control-plaintext">
                                 By Ability
                             </label>
-                            <Select options={this.state.filterData.abilities} onChange={this.onChangeFilterByAbility}/>
+                            <Select 
+                                value={{
+                                    label: abilityLabel && abilityLabel.length ? abilityLabel : <div className="text-secondary">Select...</div>
+                                }}
+                                options={this.state.filterData.abilities} 
+                                onChange={this.onChangeFilterByAbility}
+                            />
                         </div>
                     </div>
                 </div>
