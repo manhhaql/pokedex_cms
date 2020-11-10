@@ -6,10 +6,12 @@
 }
 .Main-wrapper {
     margin: 20px 80px;
+    
     display: flex;
 }
 .Main-content {
     overflow: hidden;
+    padding: 0 5px;
     margin: auto;
     width: 100%;
 }

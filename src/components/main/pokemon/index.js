@@ -8,7 +8,10 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Button
+    Button,
+    Input,
+    InputGroup,
+    InputGroupAddon
 } from 'reactstrap';
 
 import Select from 'react-select';
@@ -171,6 +174,7 @@ class PokemonComponent extends React.Component {
     onReload = () => {
         this.setState({
             params: Object.assign({}, this.state.params, {
+                name: "",
                 page: 1,
                 limit: 5,
                 type_id: null,
@@ -196,6 +200,27 @@ class PokemonComponent extends React.Component {
             params: Object.assign({}, this.state.params, {
                 limit: limit
             })
+        }, () => {
+            this.getPokemons();
+        });
+    };
+
+    onInputsChanged(field, value) {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                [field]: value
+            })
+        })
+    };
+
+    onSearchSubmit(e) {
+        e.preventDefault();
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                page: 1
+            }),
+            pokemonData: [],
+            total: 0
         }, () => {
             this.getPokemons();
         });
@@ -523,7 +548,22 @@ class PokemonComponent extends React.Component {
                     <Button color="success" onClick={this.onReload}><i className="fas fa-sync-alt"></i></Button>
                 </div>
                 </div>
+                
                 <div className="row">
+                    <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
+                        <div className='form-group'>
+                            <label className="form-control-plaintext">
+                                Search
+                            </label>
+                            <form onSubmit={(e)=>this.onSearchSubmit(e)}>
+                            <InputGroup>
+                                <Input placeholder="Enter text here..." name="name" value={this.state.params.name} onChange={(event)=>this.onInputsChanged("name", event.target.value)}/>
+                                <InputGroupAddon addonType="append"><Button color="secondary"><i className="fas fa-search"></i></Button></InputGroupAddon>
+                            </InputGroup>
+                            </form>
+                            
+                        </div>
+                    </div>
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
                         <div className='form-group'>
                             <label className="form-control-plaintext">
