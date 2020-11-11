@@ -32,7 +32,8 @@ import {
     UpdatePokemonTypeModal,
     UpdatePokemonWeaknessModal,
     UpdatePokemonAbilityModal,
-    UpdatePokemonGeneralModal
+    UpdatePokemonGeneralModal,
+    AddNewPokemonModal
 } from './PokemonModals';
 
 import "./Pokemon.css";
@@ -49,6 +50,7 @@ class PokemonComponent extends React.Component {
                 type_id: null,
                 weakness_id: null,
                 ability_id: null,
+                descending_by_id: true,
                 page: 1,
                 limit: 5,
                 
@@ -79,6 +81,9 @@ class PokemonComponent extends React.Component {
         if(this.state.params.ability_id) {
             params.ability_id = this.state.params.ability_id
         }
+        if(this.state.params.descending_by_id) {
+            params.descending_by_id = this.state.params.descending_by_id
+        }
         HTTPRequest.get({
             url: 'pokemon/list',
             params: {
@@ -89,9 +94,9 @@ class PokemonComponent extends React.Component {
                 type_id: params.type_id,
                 weakness_id: params.weakness_id,
                 ability_id: params.ability_id,
+                descending_by_id: params.descending_by_id
             }
         }).then(response => {
-            // console.log(70, response.data.data)
             if(this._isMounted) {
                 this.setState({
                     pokemonData: response.data.data,
@@ -186,6 +191,16 @@ class PokemonComponent extends React.Component {
         })
     };
 
+    sortByID = () => {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                descending_by_id: !this.state.params.descending_by_id
+            })
+        }, ()=> {
+            this.getPokemons();
+        })
+    };
+
     onChangePage(page) {
         this.setState({
             params: Object.assign({}, this.state.params, {
@@ -259,6 +274,18 @@ class PokemonComponent extends React.Component {
         this.props.history.push(`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon_id}`);
     };
 
+    _renderPokemonStage(stage) {
+        return (
+            <span className="text-nowrap">
+                {
+                    stage === dataConstant.STAGE_BASIC ? "Basic" :
+                    stage === dataConstant.STAGE_ONE ? "Stage One" :
+                    stage === dataConstant.STAGE_TWO ? "Stage Two" :
+                    stage === dataConstant.STAGE_MEGA ? "Mega" : ""
+                }
+            </span>
+        )
+    };
     _renderPokemonProperty(pokemon, index) {
         return (
             <Badge key={index} className=
@@ -272,6 +299,7 @@ class PokemonComponent extends React.Component {
                         pokemon ===  dataConstant.POKEMON_ICE ? 'ice' :
                         pokemon ===  dataConstant.POKEMON_FIGHTING ? 'fighting' :
                         pokemon ===  dataConstant.POKEMON_POISON ? 'poison' :
+                        pokemon ===  dataConstant.POKEMON_GROUND ? 'ground' :
                         pokemon ===  dataConstant.POKEMON_FLYING ? 'flying' :
                         pokemon ===  dataConstant.POKEMON_PSYCHIC ? 'psychic' :
                         pokemon ===  dataConstant.POKEMON_BUG ? 'bug' :
@@ -294,6 +322,7 @@ class PokemonComponent extends React.Component {
                     pokemon ===  dataConstant.POKEMON_ICE ? 'ice' :
                     pokemon ===  dataConstant.POKEMON_FIGHTING ? 'fighting' :
                     pokemon ===  dataConstant.POKEMON_POISON ? 'poison' :
+                    pokemon ===  dataConstant.POKEMON_GROUND ? 'ground' :
                     pokemon ===  dataConstant.POKEMON_FLYING ? 'flying' :
                     pokemon ===  dataConstant.POKEMON_PSYCHIC ? 'psychic' :
                     pokemon ===  dataConstant.POKEMON_BUG ? 'bug' :
@@ -432,7 +461,7 @@ class PokemonComponent extends React.Component {
             },
             {
                 th: "Stage",
-                td: (pokemon, index) => pokemon.stage,
+                td: (pokemon, index) => this._renderPokemonStage(pokemon.stage),
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'stage'
@@ -542,11 +571,18 @@ class PokemonComponent extends React.Component {
         return (
             <div>
                 <div className="d-flex justify-content-between">
-                <h2 className="text-secondary">Pokemon Table</h2>
-                <div>
-                    <Button color="success" className="mr-2"><i className="far fa-plus-square"></i> Add new Pokemon</Button>
-                    <Button color="success" onClick={this.onReload}><i className="fas fa-sync-alt"></i></Button>
-                </div>
+                    <h2 className="text-secondary">Pokemon Table</h2>
+                    <div className="d-flex align-items-center">
+                        <AddNewPokemonModal
+                            getPokemons={()=>this.getPokemons()}
+                        />
+                        <Button color="link" className="mr-2 btn" onClick={this.sortByID}>
+                                    <i className={`fas fa-sort-numeric-${params.descending_by_id ? "down-alt": "up"}`}></i>
+                        </Button>
+                        <Button color="link" onClick={this.onReload}>
+                            <i className="fas fa-sync-alt"></i>
+                        </Button>
+                    </div>
                 </div>
                 
                 <div className="row">
@@ -557,8 +593,13 @@ class PokemonComponent extends React.Component {
                             </label>
                             <form onSubmit={(e)=>this.onSearchSubmit(e)}>
                             <InputGroup>
-                                <Input placeholder="Enter text here..." name="name" value={this.state.params.name} onChange={(event)=>this.onInputsChanged("name", event.target.value)}/>
-                                <InputGroupAddon addonType="append"><Button color="secondary"><i className="fas fa-search"></i></Button></InputGroupAddon>
+                                <Input placeholder="Enter text here..."
+                                        name="name" 
+                                        value={this.state.params.name} 
+                                        onChange={(event)=>this.onInputsChanged("name", event.target.value)}/>
+                                <InputGroupAddon addonType="append">
+                                    <Button color="secondary"><i className="fas fa-search"></i></Button>
+                                </InputGroupAddon>
                             </InputGroup>
                             </form>
                             
@@ -570,6 +611,7 @@ class PokemonComponent extends React.Component {
                                 By Type
                             </label>
                             <Select 
+                                className="text-capitalize"
                                 value={{
                                     label: typeLabel && typeLabel.length ? typeLabel : <div className="text-secondary">Select...</div>
                                 }} 

@@ -202,7 +202,6 @@ export const PokemonImageModal = withRouter(
                     this.toggle();
                     this.props.getPokemons();
                 }).catch(error => {
-                    console.log(error)
                     ToastMessage.showError({
                         title: "ERROR",
                         message: "Upload pokemon image failed!"
@@ -242,7 +241,6 @@ export const PokemonImageModal = withRouter(
                     this.toggle();
                     this.props.getPokemons();
                 }).catch(error => {
-                    console.log(error)
                     ToastMessage.showError({
                         title: "ERROR",
                         message: "Update pokemon image failed!"
@@ -460,7 +458,7 @@ export const UpdatePokemonTypeModal = withRouter(
                                         }
                                     </div>
                                 </div>
-                                <Select isMulti options={this.state.typesData} onChange={this.onChange} />
+                                <Select className="text-capitalize" isMulti options={this.state.typesData} onChange={this.onChange} />
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" onClick={this.onUpdateTypesButtonClicked}>CHANGE</Button>{' '}
@@ -592,7 +590,7 @@ export const UpdatePokemonWeaknessModal = withRouter(
                                         }
                                     </div>
                                 </div>
-                                <Select isMulti options={this.state.weaknessData} onChange={this.onChange} />
+                                <Select className="text-capitalize" isMulti options={this.state.weaknessData} onChange={this.onChange} />
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" onClick={this.onUpdateWeaknessButtonClicked}>CHANGE</Button>{' '}
@@ -722,7 +720,7 @@ export const UpdatePokemonAbilityModal = withRouter(
                                         }
                                     </div>
                                 </div>
-                                <Select isMulti options={this.state.abilityData} onChange={this.onChange} />
+                                <Select className="text-capitalize" isMulti options={this.state.abilityData} onChange={this.onChange} />
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" onClick={this.onUpdateAbilitiesButtonClicked}>CHANGE</Button>{' '}
@@ -1016,6 +1014,377 @@ export const UpdatePokemonGeneralModal = withRouter(
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" onClick={this.onUpdateGeneralButtonClicked} disabled={!this.state.isChanged}>CHANGE</Button>{' '}
+                                <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
+                            </ModalFooter>
+                        </Modal>
+                    </div>
+                )
+            };
+        }
+    )
+);
+
+export const AddNewPokemonModal = withRouter(
+    connect(
+        (state) => ({
+            appAuthentication: state.appAuthentication.current
+        }),
+        (dispatch) => ({
+
+        })
+    )(
+        class AddNewPokemonModalComponent extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    pokemonList: null,
+                    typeList: null,
+                    weaknessList: null,
+                    abilityList: null,
+                    params: {
+                        name: "",
+                        stage: "",
+                        of_basic: "",
+                        height: "",
+                        weight: "",
+                        gender: "",
+                        types: "",
+                        weakness: "",
+                        abilities: "",
+                    },
+                    isOpen: false,
+                    isChanged: false
+                };
+                this.genderOptions = [
+                    { label: "Male", value: dataConstant.GENDER_MALE },
+                    { label: "Female", value: dataConstant.GENDER_FEMALE },
+                    { label: "Both", value: dataConstant.GENDER_BOTH },
+                ];
+                this.stageOptions = [
+                    { label: "Basic", value: dataConstant.STAGE_BASIC },
+                    { label: "Stage One", value: dataConstant.STAGE_ONE },
+                    { label: "Stage Two", value: dataConstant.STAGE_TWO },
+                    { label: "Mega", value: dataConstant.STAGE_MEGA },
+                ];
+                this._isMounted = false;
+            };
+
+            toggle = () => {
+                this.setState({
+                    params: Object.assign({}, this.state.params, {
+                        name: "",
+                        stage: "",
+                        of_basic: "",
+                        height: "",
+                        weight: "",
+                        gender: "",
+                        types: "",
+                        weakness: "",
+                        abilities: "",
+                    }),
+                    isChanged: false,
+                    isOpen: !this.state.isOpen
+                })
+            };
+
+            getPokemons() {
+                HTTPRequest.get({
+                    url: 'pokemon/list',
+                    params: {}
+                }).then(response => {
+                    if (this._isMounted) {
+                        let pokemonList = response.data.data.map((pokemon) => {
+                            return {
+                                value: pokemon.id,
+                                label: pokemon.name
+                            }
+                        });
+                        this.setState({
+                            pokemonList: pokemonList,
+                        })
+                    }
+                }).catch(error => {
+                    if (error.response) {
+                        ToastMessage.showError({
+                            title: error.response.data.code,
+                            message: error.response.data.error
+                        })
+                    } else {
+                        ToastMessage.showError({
+                            title: "ERROR",
+                            message: "Failed to get pokemon list"
+                        })
+                    }
+                })
+            };
+
+            getTypes = () => {
+                HTTPRequest.get({
+                    url: 'properties/type',
+                    params: {}
+                }).then(response => {
+                    let typeList = response.data.data.map((type) => {
+                        return {
+                            value: type.id,
+                            label: type.name
+                        }
+                    })
+                    this.setState({
+                        typeList: typeList,
+                    })
+                }).catch(error => {
+                })
+            };
+
+            getWeakness = () => {
+                HTTPRequest.get({
+                    url: 'properties/weakness',
+                    params: {}
+                }).then(response => {
+                    let weaknessList = response.data.data.map((type) => {
+                        return {
+                            value: type.id,
+                            label: type.name
+                        }
+                    })
+                    this.setState({
+                        weaknessList: weaknessList,
+                    })
+                }).catch(error => {
+                })
+            };
+
+            getAbilities = () => {
+                HTTPRequest.get({
+                    url: 'properties/ability',
+                    params: {}
+                }).then(response => {
+                    let abilityList = response.data.data.map((type) => {
+                        return {
+                            value: type.id,
+                            label: type.name
+                        }
+                    })
+                    this.setState({
+                        abilityList: abilityList,
+                    })
+                }).catch(error => {
+                })
+            };
+
+            onMultipleSelected = (field, e) => {
+                let values = e.map(value => {
+                    return value.value
+                })
+                this.setState({
+                    params: Object.assign({}, this.state.params, {
+                        [field]: values
+                    })
+                })
+            };
+
+            onInputsChanged(field, value) {
+                this.setState({
+                    isChanged: true,
+                    params: Object.assign({}, this.state.params, {
+                        [field]: value
+                    })
+                })
+            };
+
+            onAddNewPokemonButtonClicked = e => {
+                e.preventDefault();
+                let values = {
+
+                };
+
+                if (this.state.params.name) {
+                    values.name = this.state.params.name
+                };
+                if (this.state.params.height) {
+                    values.height = this.state.params.height
+                };
+                if (this.state.params.weight) {
+                    values.weight = this.state.params.weight
+                };
+                if (this.state.params.gender) {
+                    values.gender = this.state.params.gender
+                };
+                if (this.state.params.stage !== null) {
+                    values.stage = this.state.params.stage
+                };
+                if (this.state.params.of_basic) {
+                    values.of_basic = this.state.params.of_basic
+                };
+                if (this.state.params.types) {
+                    values.types = this.state.params.types
+                };
+                if (this.state.params.weakness) {
+                    values.weakness = this.state.params.weakness
+                };
+                if (this.state.params.abilities) {
+                    values.abilities = this.state.params.abilities
+                };
+
+                console.log(values)
+                HTTPRequest.post({
+                    url: 'pokemon/create',
+                    token: this.props.appAuthentication.token,
+                    data: values
+                }).then(response => {
+                    if (response.data.code !== dataConstant.CODE_SUCCESS) {
+                        ToastMessage.showError({
+                            title: response.data.code,
+                            message: response.data.error
+                        })
+                    }
+                    ToastMessage.showSuccess({
+                        title: response.data.code,
+                        message: `${this.state.params.name} added!'`
+                    })
+                    this.toggle();
+                    this.props.getPokemons();
+                }).catch(error => {
+                    if (error.response) {
+                        ToastMessage.showError({
+                            title: error.response.data.code,
+                            message: error.response.data.error
+                        })
+                    } else {
+                        ToastMessage.showError({
+                            title: "ERROR",
+                            message: "Add new Pokemon failed!"
+                        })
+                    }
+                })
+            };
+
+            componentDidMount() {
+                this._isMounted = true;
+                this.getPokemons();
+                this.getTypes();
+                this.getWeakness();
+                this.getAbilities();
+            };
+
+            componentWillUnmount() {
+                this._isMounted = false;
+            };
+
+            render() {
+                // let params = this.state.params;
+                let genderOptions = this.genderOptions;
+                let stageOptions = this.stageOptions;
+                let ofBasicOptions = this.state.pokemonList;
+
+                // let genderLabel = genderOptions && genderOptions.filter(a => a.value === params.gender)
+                //     .map(a => a.label);
+                // let stageLabel = stageOptions && stageOptions.filter(a => a.value === params.stage)
+                //     .map(a => a.label);
+                // let ofBasicLabel = ofBasicOptions && ofBasicOptions.filter(a => a.value === params.of_basic)
+                //     .map(a => a.label);
+                return (
+                    <div>
+                        <Button color="success" className="mr-2" onClick={this.toggle}>
+                            <i className="far fa-plus-square"></i> Add new Pokemon
+                        </Button>
+                        <Modal isOpen={this.state.isOpen} toggle={this.toggle} size="md">
+                            <ModalHeader toggle={this.toggle}>
+                                Add New Pokemon?
+                            </ModalHeader>
+                            <ModalBody className="m-2">
+                                <div className="row">
+                                    <div className="col-6">
+                                        <Label for="pokemonName">Name:</Label>
+                                        <Input 
+                                            className="text-capitalize"
+                                            type="text" name="name" id="pokemonName"
+                                            value={this.state.params.name}
+                                            onChange={(event) => this.onInputsChanged('name', event.target.value)}
+                                        />
+                                    </div>
+                                    <div className="col-6">
+                                        <Label for="pokemonGender">Gender:</Label>
+                                        <Select 
+                                            className="text-capitalize"
+                                            options={genderOptions}
+                                            onChange={(event) => this.onInputsChanged('gender', event.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <Label for="pokemonHeight">Height (Inches):</Label>
+                                        <Input 
+                                            type="text" name="height" id="pokemonHeight"
+                                            value={this.state.params.height}
+                                            onChange={(event) => this.onInputsChanged('height', event.target.value)}
+                                        />
+                                    </div>
+                                    <div className="col-6">
+                                        <Label for="pokemonWeight">Weight (Lbs):</Label>
+                                        <Input 
+                                            type="text" name="weight" id="pokemonWeight"
+                                            value={this.state.params.weight}
+                                            onChange={(event) => this.onInputsChanged('weight', event.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <Label for="pokemonStage">Stage:</Label>
+                                        <Select
+                                            className="text-capitalize"
+                                            options={stageOptions}
+                                            onChange={(event) => this.onInputsChanged('stage', event.value)}
+                                        />
+                                    </div>
+                                    <div className="col-6">
+                                        <Label for="pokemonBasic">Of Basic:</Label>
+                                        <Select
+                                            className="text-capitalize"
+                                            options={ofBasicOptions}
+                                            onChange={(event) => this.onInputsChanged('of_basic', event.value)}
+                                            isDisabled={!this.state.params.stage || this.state.params.stage === dataConstant.STAGE_BASIC}
+                                        />
+                                        <FormText text="muted">
+                                            (*)
+                                        </FormText>
+                                    </div>
+                                </div>
+                                <FormGroup>
+                                    <Label for="">Types:</Label>
+                                    <Select 
+                                        className="text-capitalize"
+                                        isMulti 
+                                        options={this.state.typeList} 
+                                        name="types" 
+                                        onChange={(e)=>this.onMultipleSelected("types", e)} 
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="">Weakness:</Label>
+                                    <Select 
+                                        className="text-capitalize"
+                                        isMulti 
+                                        options={this.state.weaknessList} 
+                                        name="weakness" 
+                                        onChange={(e)=>this.onMultipleSelected("weakness", e)} 
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="">Abilities:</Label>
+                                    <Select 
+                                        className="text-capitalize"
+                                        isMulti 
+                                        options={this.state.abilityList} 
+                                        name="abilities" 
+                                        onChange={(e)=>this.onMultipleSelected("abilities", e)} 
+                                    />
+                                </FormGroup>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="success" onClick={this.onAddNewPokemonButtonClicked} disabled={!this.state.isChanged}>Add New Pokemon</Button>{' '}
                                 <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                             </ModalFooter>
                         </Modal>
