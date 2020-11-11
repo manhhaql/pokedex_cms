@@ -626,6 +626,7 @@ class PokemonComponent extends React.Component {
                                 By Weakness
                             </label>
                             <Select 
+                                className="text-capitalize"
                                 value={{
                                     label: weaknessLabel && weaknessLabel.length ? weaknessLabel : <div className="text-secondary">Select...</div>
                                 }}
@@ -640,6 +641,7 @@ class PokemonComponent extends React.Component {
                                 By Ability
                             </label>
                             <Select 
+                                className="text-capitalize"
                                 value={{
                                     label: abilityLabel && abilityLabel.length ? abilityLabel : <div className="text-secondary">Select...</div>
                                 }}
