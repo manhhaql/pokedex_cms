@@ -7,7 +7,11 @@ import {
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    Button,
+    Input,
+    InputGroup,
+    InputGroupAddon
 } from 'reactstrap';
 
 import Select from 'react-select';
@@ -32,18 +36,22 @@ class UsersComponent extends React.Component {
             total: null,
             params: {
                 id: null,
-                name: '',
+                username: '',
                 type: null,
                 status: null,
                 page: 1,
                 limit: 5,
                 
-            },
-            filterData: {
-                type: null,
-                status: null,
             }
         };
+        this.userTypeOptions = [
+            {label: "Admin", value: dataConstant.USER_ADMIN},
+            {label: "Guest", value: dataConstant.USER_GUEST},
+        ];
+        this.userStatusOptions = [
+            {label: "Active", value: dataConstant.STATUS_ACTIVE},
+            {label: "Inactive", value: dataConstant.STATUS_INACTIVE},
+        ];
         this._isMounted = false;
     };
 
@@ -52,8 +60,8 @@ class UsersComponent extends React.Component {
         if(this.state.params.id) {
             params.id = this.state.params.id
         }
-        if(this.state.params.name) {
-            params.name = this.state.params.name
+        if(this.state.params.username) {
+            params.username = this.state.params.username
         }
         if(this.state.params.type) {
             params.type = this.state.params.type
@@ -85,6 +93,42 @@ class UsersComponent extends React.Component {
         })
     };
 
+    onReload = () => {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                id: null,
+                username: '',
+                type: null,
+                status: null,
+                page: 1,
+                limit: 5,
+            })
+        }, ()=> {
+            this.getUsers();
+        })
+    };
+
+    onInputsChanged(field, value) {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                [field]: value
+            })
+        })
+    };
+
+    onSearchSubmit(e) {
+        e.preventDefault();
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                page: 1
+            }),
+            userData: [],
+            total: 0
+        }, () => {
+            this.getUsers();
+        });
+    };
+
     onChangePage(page) {
         this.setState({
             params: Object.assign({}, this.state.params, {
@@ -98,6 +142,25 @@ class UsersComponent extends React.Component {
         this.setState({
             params: Object.assign({}, this.state.params, {
                 limit: limit
+            })
+        }, () => {
+            this.getUsers();
+        });
+    };
+
+    onChangeFilterByType = (e) => {
+        this.setState({
+                params: Object.assign({}, this.state.params, {
+                type: e.value
+            })
+        }, ()=> {
+            this.getUsers()
+        });
+    };
+    onChangeFilterByStatus = (e) => {
+        this.setState({
+            params: Object.assign({}, this.state.params, {
+                status: e.value
             })
         }, () => {
             this.getUsers();
@@ -212,8 +275,72 @@ class UsersComponent extends React.Component {
         this.getUsers()
     };
     render() {
+        let params = this.state.params;
+        let typeLabel = this.userTypeOptions.filter(a=> a.value === params.type)
+        .map(a=> a.label);
+        let statusLabel = this.userStatusOptions.filter(a=> a.value === params.status)
+        .map(a=> a.label);
         return (
             <div>
+                <div className="d-flex justify-content-between">
+                    <h2 className="text-secondary">User Table</h2>
+                    <div className="d-flex align-items-center">
+                        <Button color="link" onClick={this.onReload}>
+                            <i className="fas fa-sync-alt"></i>
+                        </Button>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
+                        <div className='form-group'>
+                            <label className="form-control-plaintext">
+                                Search
+                            </label>
+                            <form onSubmit={(e)=>this.onSearchSubmit(e)}>
+                            <InputGroup>
+                                <Input placeholder="Enter text here..."
+                                        name="username" 
+                                        value={this.state.params.username} 
+                                        onChange={(event)=>this.onInputsChanged("username", event.target.value)}/>
+                                <InputGroupAddon addonType="append">
+                                    <Button color="secondary"><i className="fas fa-search"></i></Button>
+                                </InputGroupAddon>
+                            </InputGroup>
+                            </form>
+                            
+                        </div>
+                    </div>
+                    <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
+                        <div className='form-group'>
+                            <label className="form-control-plaintext">
+                                By Type
+                            </label>
+                            <Select 
+                                className="text-capitalize"
+                                value={{
+                                    label: typeLabel && typeLabel.length ? typeLabel : <div className="text-secondary">Select...</div>
+                                }} 
+                                options={this.userTypeOptions} 
+                                onChange={this.onChangeFilterByType}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
+                        <div className='form-group'>
+                            <label className="form-control-plaintext">
+                                By Status
+                            </label>
+                            <Select 
+                                className="text-capitalize"
+                                value={{
+                                    label: statusLabel && statusLabel.length ? statusLabel : <div className="text-secondary">Select...</div>
+                                }}
+                                options={this.userStatusOptions} 
+                                onChange={this.onChangeFilterByStatus}
+                            />
+                        </div>
+                    </div>
+                </div>
                 {
                     this.state.userData && (
                         <div>
