@@ -1,0 +1,11 @@
+.Dashboard {
+    
+}
+
+.Dashboard-item {
+    border-radius: 5px;
+    padding: 50px 0;
+    margin: 10px;
+    text-align: center;
+    color: #fff;
+}
