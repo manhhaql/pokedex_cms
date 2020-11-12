@@ -160,7 +160,7 @@ class PokemonDetailComponent extends React.Component {
                         <i className="fas fa-arrow-left mr-2"></i>Back
                     </Button>
                 </div>
-                <div>
+                <Container>
                     {
                         this.state.pokemon && (
                             <div className="Detail-grid__container">
@@ -294,7 +294,7 @@ class PokemonDetailComponent extends React.Component {
                             </div>
                         )
                     }
-                </div>
+                </Container>
             </div>
         )
     }
