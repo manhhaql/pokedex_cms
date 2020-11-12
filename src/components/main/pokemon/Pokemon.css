@@ -66,3 +66,164 @@
 .Pokemon-fairy {
     background-color: #F0B6BC;
 }
+
+/* POKEMON DETAIL */
+.Detail-header {
+    display: flex;
+    justify-content: space-between;
+}
+.Detail-grid__item1 { 
+    grid-area: header; 
+    text-align: center;
+}
+.Detail-grid__item2 { 
+    grid-area: image;
+    background-color: #ebebeb;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.Detail-grid__item2 img {
+    display: block;
+    width: 250px;
+    min-width: 200px;
+    padding-bottom: 30px;
+}
+.Detail-grid__item3 { 
+    grid-area: info;
+    background-color: #30a7d7;
+    color: #fff;
+    border-radius: 10px;
+    display: block;
+    float: left;
+    min-height: 245px;
+    position: relative;
+    width: 100%;
+}
+.Detail-grid__item4 { 
+    grid-area: type;
+    margin: 50px 0;
+}
+.Detail-grid__item5 { 
+    grid-area: weakness; 
+    margin: 50px 0;
+}
+.Detail-grid__item6 { grid-area: footer; }
+
+.Detail-grid__container {
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'image info'
+    'type weakness'
+    'footer footer';
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.Detail-grid__container > div {
+    font-size: 20px;
+}
+
+.Attribute-title {
+    clear: both;
+    color: #fff;
+    float: left;
+    font-size: 100%;
+    margin: 1.25em 0 0 1.25em;
+    text-transform: none;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.Attribute-value {
+    clear: both;
+    color: #212121;
+    float: left;
+    font-size: 125%;
+    margin: 0.75em 1.5em 0 1em;
+    white-space: normal;
+    word-break: break-word;
+}
+.Attribute-value__badge {
+    padding: 5px 30px;
+    margin-right: 10px;
+}
+.Attribute-info::after {
+    background: #fff;
+    border-radius: 50%;
+    color: #30a7d7;
+    content: "?";
+    font-size: 62.5%;
+    font-weight: bold;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    margin-top: 0.7rem;
+    margin-left: 0.3rem;
+    text-align: center;
+    cursor: pointer;
+}
+.Attribute-info__btn {
+    background-color: transparent;
+    border: none;
+}
+.Attribute-info__btn:focus{
+    outline: none;
+}
+.Ability-info {
+    background-color: #313131;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: all 0.5s ease-in-out;
+}
+.Ability-info.show {
+    visibility: visible;
+    opacity: 1;
+}
+.Ability-info__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.Ability-info__close {
+    cursor: pointer;
+    font-size: 87.5%;
+    text-transform: capitalize;
+}
+.Ability-info__title {
+    font-size: 85%;
+    font-weight: 600;
+}
+.Detail-evolution {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.Detail-evolution__card {
+    height: 300px;
+    width: 300px;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+}
+.Detail-evolution__img {
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background-color: #616161;
+    display: block;
+    margin: 0 auto;
+    max-width: 150px;
+    width: 100%;
+    cursor: pointer;
+}

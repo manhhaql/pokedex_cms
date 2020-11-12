@@ -1,6 +1,8 @@
 export const CODE_SUCCESS = "SUCCESS";
 export const CODE_ERROR = "ERROR";
 
+export const NO_IMAGE_URL = "https://storage.googleapis.com/hapokedex.appspot.com/public/no_image.gif";
+
 export const STATUS_ACTIVE = 1;
 export const STATUS_INACTIVE = 2;
 

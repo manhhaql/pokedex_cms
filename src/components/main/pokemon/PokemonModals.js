@@ -93,7 +93,7 @@ export const UpdatePokemonStatusModal = withRouter(
                                                 {this.props.pokemon.name}</span>?
                                         </ModalHeader>
                                         <ModalBody className="text-center">
-                                            <img src={this.props.pokemon.image} alt=""></img>
+                                            <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
                                             <div>
                                                 <span className="text-primary text-capitalize">{this.props.pokemon.name}</span> will no longer appear on website, you can reactivate it anytime.
                                             </div>
@@ -119,7 +119,7 @@ export const UpdatePokemonStatusModal = withRouter(
                                                 {this.props.pokemon.name}</span>?
                                         </ModalHeader>
                                         <ModalBody className="text-center">
-                                            <img src={this.props.pokemon.image} alt=""></img>
+                                            <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
                                             <div>
                                                 <span className="text-primary text-capitalize">{this.props.pokemon.name}</span> will now appear on website.
                                             </div>
@@ -265,7 +265,7 @@ export const PokemonImageModal = withRouter(
                                         </ModalHeader>
                                         <ModalBody>
                                             <div className="d-flex justify-content-center align-items-center">
-                                                <img src={this.props.pokemon.image} alt=""></img>
+                                                <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
                                                 <i className="fas fa-arrow-right text-danger fa-2x"></i>
                                                 {
                                                     this.state.file && (
@@ -446,7 +446,7 @@ export const UpdatePokemonTypeModal = withRouter(
                             </ModalHeader>
                             <ModalBody className="">
                                 <div className="d-flex justify-content-around align-items-center">
-                                    <img src={this.props.pokemon.image} alt=""></img>
+                                    <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
                                     <div>
                                         <label>Current:</label>
                                         {
@@ -458,10 +458,10 @@ export const UpdatePokemonTypeModal = withRouter(
                                         }
                                     </div>
                                 </div>
-                                <Select className="text-capitalize" isMulti options={this.state.typesData} onChange={this.onChange} />
+                                <Select className="text-capitalize mt-3" isMulti options={this.state.typesData} onChange={this.onChange} />
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="danger" onClick={this.onUpdateTypesButtonClicked}>CHANGE</Button>{' '}
+                                <Button color="danger" disabled={!this.state.typesSelected.length} onClick={this.onUpdateTypesButtonClicked}>CHANGE</Button>{' '}
                                 <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                             </ModalFooter>
                         </Modal>
@@ -578,7 +578,7 @@ export const UpdatePokemonWeaknessModal = withRouter(
                             </ModalHeader>
                             <ModalBody className="">
                                 <div className="d-flex justify-content-around align-items-center">
-                                    <img src={this.props.pokemon.image} alt=""></img>
+                                    <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
                                     <div>
                                         <label>Current:</label>
                                         {
@@ -590,10 +590,10 @@ export const UpdatePokemonWeaknessModal = withRouter(
                                         }
                                     </div>
                                 </div>
-                                <Select className="text-capitalize" isMulti options={this.state.weaknessData} onChange={this.onChange} />
+                                <Select className="text-capitalize mt-3" isMulti options={this.state.weaknessData} onChange={this.onChange} />
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="danger" onClick={this.onUpdateWeaknessButtonClicked}>CHANGE</Button>{' '}
+                                <Button color="danger" disabled={!this.state.weaknessSelected.length} onClick={this.onUpdateWeaknessButtonClicked}>CHANGE</Button>{' '}
                                 <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                             </ModalFooter>
                         </Modal>
@@ -710,20 +710,20 @@ export const UpdatePokemonAbilityModal = withRouter(
                             </ModalHeader>
                             <ModalBody className="">
                                 <div className="d-flex justify-content-around align-items-center">
-                                    <img src={this.props.pokemon.image} alt=""></img>
+                                    <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
                                     <div>
                                         <label>Current:</label>
                                         {
                                             this.props.pokemon.abilities && this.props.pokemon.abilities.map((ability, index) =>
-                                                <PokemonAbilityComponent ability_id={ability} key={index} />
+                                                <PokemonAbilityComponent ability={ability} key={index} />
                                             )
                                         }
                                     </div>
                                 </div>
-                                <Select className="text-capitalize" isMulti options={this.state.abilityData} onChange={this.onChange} />
+                                <Select className="text-capitalize mt-3" isMulti options={this.state.abilityData} onChange={this.onChange} />
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="danger" onClick={this.onUpdateAbilitiesButtonClicked}>CHANGE</Button>{' '}
+                                <Button color="danger" disabled={!this.state.abilitiesSelected.length} onClick={this.onUpdateAbilitiesButtonClicked}>CHANGE</Button>{' '}
                                 <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                             </ModalFooter>
                         </Modal>
@@ -984,7 +984,7 @@ export const UpdatePokemonGeneralModal = withRouter(
                                         </FormGroup>
                                     </div>
                                     <div className="col-4">
-                                        <img src={this.props.pokemon.image} style={{ width: "100%" }} alt="pokemon"></img>
+                                        <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} style={{ width: "100%" }} alt="pokemon"></img>
                                     </div>
                                 </div>
                                 <div className="row">
