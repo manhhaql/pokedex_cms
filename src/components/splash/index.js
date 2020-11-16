@@ -20,7 +20,6 @@ class SplashComponent extends React.Component {
         this.props.changeInitialAppState(appStateConstant.APP_STATE_IS_INITIAL_YES);
         let token = localStorage.getItem(localStorageItemConstant.LOCAL_STORAGE_ITEM_TOKEN);
         let currentPath = localStorage.getItem(localStorageItemConstant.LOCAL_STORAGE_ITEM_CURRENT_PATH);
-
         if(token) {
             HTTPRequest.get({
                 url: 'users/user-info',
@@ -37,7 +36,7 @@ class SplashComponent extends React.Component {
                     } else {
                         this.props.history.replace(`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`);
                     }
-                    return;
+                    // return;
                 }
                 this.props.loadAuthData(response.data.data)
                 if(currentPath) {
@@ -50,9 +49,15 @@ class SplashComponent extends React.Component {
                     this.props.history.replace(`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_DASHBOARD}`);
                 }
             }).catch(error => {
-                console.log(error)
-                // Show Error message
-                return;
+                if(currentPath) {
+                    localStorage.removeItem(localStorageItemConstant.LOCAL_STORAGE_ITEM_CURRENT_PATH);
+                    if(currentPath.indexOf('//') > - 1) {
+                        currentPath = `/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`
+                    }
+                    this.props.history.replace(currentPath);
+                } else {
+                    this.props.history.replace(`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`);
+                }
             }); 
         } else {
             this.props.loadAuthData(null);
@@ -64,7 +69,7 @@ class SplashComponent extends React.Component {
     render() {
         return (
             <div className="text-danger">
-                <h2>SPLASH</h2>
+                <h1  style={{position: "absolute", top:"50%", left:"50%",transform: "translate(-50%, -50%)"}}>Loading Pokedex ...</h1>
             </div>
         )
     }
