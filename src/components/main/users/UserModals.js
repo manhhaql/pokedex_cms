@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import TooltipComponent from 'components/common/tooltip';
+
 import * as dataConstant from 'constant/data';
 
 import {
@@ -71,13 +73,18 @@ export const UpdateUserStatusModal = withRouter(
 
             render() {
                 return (
-                    <div>
+                    <>
                         {
                             this.props.user.status === dataConstant.STATUS_ACTIVE && (
-                                <span>
-                                    <Label className="text-dark" onClick={this.toggle}>
-                                        <i className="fas fa-lock mr-2 text-danger"></i>Deactivate
-                                    </Label>
+                                <>
+                                    <span onClick={this.toggle} id={`UserStatusDeactivate_${this.props.user.id}`}>
+                                        <i className="fas fa-lock text-danger"></i>
+                                    </span>
+                                    <TooltipComponent
+                                        placement="top"
+                                        target={`UserStatusDeactivate_${this.props.user.id}`}
+                                        text="Deactivate"
+                                    />
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>deactivate </code> 
@@ -94,15 +101,20 @@ export const UpdateUserStatusModal = withRouter(
                                             <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                                         </ModalFooter>
                                     </Modal>
-                                </span>
+                                </>
                             )
                         }
                         {
                             this.props.user.status === dataConstant.STATUS_INACTIVE && (
-                                <span>
-                                    <Label className="text-dark" onClick={this.toggle}>
-                                        <i className="fas fa-lock-open mr-2 text-success"></i>Reactivate
-                                    </Label>
+                                <>
+                                    <span onClick={this.toggle} id={`UserStatusReactivate_${this.props.user.id}`}>
+                                        <i className="fas fa-lock-open text-success"></i>
+                                    </span>
+                                    <TooltipComponent
+                                        placement="top"
+                                        target={`UserStatusReactivate_${this.props.user.id}`}
+                                        text="Reactivate"
+                                    />
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>reactivate </code> 
@@ -119,10 +131,10 @@ export const UpdateUserStatusModal = withRouter(
                                             <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                                         </ModalFooter>
                                     </Modal>
-                                </span>
+                                </>
                             )
                         }
-                    </div>
+                    </>
                 )
             };
         }
@@ -184,13 +196,18 @@ export const UpdateUserTypeModal = withRouter(
 
             render() {
                 return (
-                    <div>
+                    <>
                         {
                             this.props.user.type === dataConstant.USER_ADMIN && (
-                                <span>
-                                    <Label  className="text-dark" onClick={this.toggle}>
-                                        <i className="fas fa-user mr-2 text-secondary"></i>Set Type Guest
-                                    </Label>
+                                <>
+                                    <span  onClick={this.toggle} id={`SetTypeGuest_${this.props.user.id}`}>
+                                        <i className="fas fa-user"></i>
+                                    </span>
+                                    <TooltipComponent
+                                        placement="top"
+                                        target={`SetTypeGuest_${this.props.user.id}`}
+                                        text="Set Type Guest"
+                                    />
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>set as Guest </code> 
@@ -207,15 +224,20 @@ export const UpdateUserTypeModal = withRouter(
                                             <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                                         </ModalFooter>
                                     </Modal>
-                                </span>
+                                </>
                             )
                         }
                         {
                             this.props.user.type === dataConstant.USER_GUEST && (
-                                <span>
-                                    <Label className="text-dark" onClick={this.toggle}>
-                                        <i className="fas fa-user mr-2 text-secondary"></i>Set Type Admin
-                                    </Label>
+                                <>
+                                    <span onClick={this.toggle} id={`SetTypeAdmin_${this.props.user.id}`}>
+                                        <i className="fas fa-user"></i>
+                                    </span>
+                                    <TooltipComponent
+                                        placement="top"
+                                        target={`SetTypeAdmin_${this.props.user.id}`}
+                                        text="Set Type Admin"
+                                    />
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>set Admin </code> 
@@ -232,10 +254,10 @@ export const UpdateUserTypeModal = withRouter(
                                             <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                                         </ModalFooter>
                                     </Modal>
-                                </span>
+                                </>
                             )
                         }
-                    </div>
+                    </>
                 )
             };
         }
