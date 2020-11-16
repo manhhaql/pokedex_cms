@@ -18,7 +18,7 @@ class TableCommonComponent extends React.Component {
                                     NO DATA
                                 </h3>
                             </div> : 
-                            <table className='table table-striped table-bordered' role="grid" id='table' style={this.props.tableStyles}>
+                            <table className='table table-bordered' role="grid" id='table' style={this.props.tableStyles}>
                                 <thead className='thead-dark'>
                                     <tr className='' role="row">
                                         {

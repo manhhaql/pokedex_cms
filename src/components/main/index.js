@@ -27,7 +27,7 @@ class MainComponent extends React.Component {
 
     render() {
         return (
-            <div className="Main">
+            <div className="Main" style={{zIndex:-1}}>
                 <HeaderComponent toggleSidebar={this.toggleSidebar}/>
                 <div className="Main-wrapper">
                     <SidebarComponent 

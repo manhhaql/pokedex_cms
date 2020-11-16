@@ -230,7 +230,31 @@
     width: 100%;
     cursor: pointer;
 }
+.Content-header__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.Action-button__group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eeeeee;
+    border-radius: 5px;
+}
+.Action-button__item {
+    font-size: 120%;
+    padding: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    text-align: center;
+    color: #6c757d;
+    transition: all 100ms ease-in-out;
+}
+.Action-button__item:hover {
+    transform: scale(1.2);
+}
 
 /* MOBILE DEVICES*/
 @media only screen and (max-width: 600px) {
@@ -247,6 +271,12 @@
     }
     .Ability-info__header {
         margin-bottom: 10px;
+    }
+    .Content-header__btn--text {
+        display: none;
+    }
+    .Content-header__title {
+        font-size: 25px;
     }
 }
 @media only screen and (max-width: 768px) {

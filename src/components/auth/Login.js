@@ -100,7 +100,7 @@ class LoginComponent extends React.Component {
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Label className="Auth-form__label--title" for="username" for="password" sm={2}>Password</Label>
+                        <Label className="Auth-form__label--title" for="password" sm={2}>Password</Label>
                         <Col sm={10}>
                             <Input 
                                 name="password" 

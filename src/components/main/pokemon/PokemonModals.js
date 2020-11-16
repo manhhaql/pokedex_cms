@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import TooltipComponent from 'components/common/tooltip';
+
 import * as dataConstant from 'constant/data';
 
 import {
@@ -47,7 +49,6 @@ export const UpdatePokemonStatusModal = withRouter(
                 })
             };
 
-
             onUpdateStatusButtonClicked = () => {
                 HTTPRequest.put({
                     url: 'pokemon/update',
@@ -79,13 +80,18 @@ export const UpdatePokemonStatusModal = withRouter(
 
             render() {
                 return (
-                    <div>
+                    <>
                         {
                             this.props.pokemon.status === dataConstant.STATUS_ACTIVE && (
-                                <span>
-                                    <Label className="text-dark" onClick={this.toggle}>
-                                        <i className="fas fa-lock mr-2 text-danger"></i>Deactivate
-                                    </Label>
+                                <>
+                                    <span onClick={this.toggle} id={`PokemonStatusDeactivate_${this.props.pokemon.id}`}>
+                                        <i className="fas fa-lock text-danger"></i>
+                                    </span>
+                                    <TooltipComponent
+                                        placement="top"
+                                        target={`PokemonStatusDeactivate_${this.props.pokemon.id}`}
+                                        text="Deactivate"
+                                    />
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>deactivate </code>
@@ -103,15 +109,20 @@ export const UpdatePokemonStatusModal = withRouter(
                                             <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                                         </ModalFooter>
                                     </Modal>
-                                </span>
+                                </>
                             )
                         }
                         {
                             this.props.pokemon.status === dataConstant.STATUS_INACTIVE && (
-                                <span>
-                                    <Label className="text-dark" onClick={this.toggle}>
-                                        <i className="fas fa-lock-open mr-2 text-success"></i>Reactivate
-                                    </Label>
+                                <>
+                                    <span onClick={this.toggle} id={`PokemonStatusReactivate_${this.props.pokemon.id}`}>
+                                        <i className="fas fa-lock-open text-success"></i>Reactivate
+                                    </span>
+                                    <TooltipComponent
+                                        placement="top"
+                                        target={`PokemonStatusReactivate_${this.props.pokemon.id}`}
+                                        text="Reactivate"
+                                    />
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>reactivate </code>
@@ -129,10 +140,10 @@ export const UpdatePokemonStatusModal = withRouter(
                                             <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                                         </ModalFooter>
                                     </Modal>
-                                </span>
+                                </>
                             )
                         }
-                    </div>
+                    </>
                 )
             };
         }
@@ -250,13 +261,59 @@ export const PokemonImageModal = withRouter(
 
             render() {
                 return (
-                    <div>
+                    <>  
+                        {
+                            !this.props.pokemon.image && (
+                                <>
+                                    <span  onClick={this.toggle} id={`PokemonAddImage_${this.props.pokemon.id}`}>
+                                        <i className="fas fa-image "></i>
+                                    </span>
+                                    <TooltipComponent 
+                                        placement="top"
+                                        target={`PokemonAddImage_${this.props.pokemon.id}`}
+                                        text="Add Image"
+                                    />
+                                    <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
+                                        <ModalHeader toggle={this.toggle}>
+                                            Are you sure want to <code>add image for </code>
+                                            <span className="text-primary text-capitalize">
+                                                {this.props.pokemon.name}</span>?
+                                        </ModalHeader>
+                                        <ModalBody className="text-center">
+                                            {
+                                                this.state.file && (
+                                                    <img src={URL.createObjectURL(this.state.file)} alt="" style={{width: "50%"}}></img>
+                                                )
+                                            }
+                                            <FormGroup row>
+                                                <Label for="uploadImage" sm={2}>File</Label>
+                                                <Col sm={10}>
+                                                    <Input type="file" name="file" id="uploadImage" onChange={this.onChange} />
+                                                    <FormText color="muted">
+                                                        Please select an image file here.
+                                                        </FormText>
+                                                </Col>
+                                            </FormGroup>
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button color="danger" onClick={this.onAddImageButtonClicked}>ADD</Button>{' '}
+                                            <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
+                                        </ModalFooter>
+                                    </Modal>
+                                </>
+                            )
+                        }
                         {
                             !!this.props.pokemon.image && (
-                                <span>
-                                    <Label className="text-dark" onClick={this.toggle}>
-                                        <i className="fas fa-image mr-2 text-secondary"></i>Change image
-                                    </Label>
+                                <>
+                                    <span  onClick={this.toggle} id={`PokemonChangeImage_${this.props.pokemon.id}`}>
+                                        <i className="fas fa-image"></i>
+                                    </span>
+                                    <TooltipComponent 
+                                        placement="top"
+                                        target={`PokemonChangeImage_${this.props.pokemon.id}`}
+                                        text="Change Image"
+                                    />
                                     <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                                         <ModalHeader toggle={this.toggle}>
                                             Are you sure want to <code>change image of </code>
@@ -294,46 +351,10 @@ export const PokemonImageModal = withRouter(
                                             <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                                         </ModalFooter>
                                     </Modal>
-                                </span>
+                                </>
                             )
                         }
-                        {
-                            !this.props.pokemon.image && (
-                                <span>
-                                    <Label className="text-dark" onClick={this.toggle}>
-                                        <i className="fas fa-image mr-2 text-secondary"></i>Add image
-                                    </Label>
-                                    <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
-                                        <ModalHeader toggle={this.toggle}>
-                                            Are you sure want to <code>add image for </code>
-                                            <span className="text-primary text-capitalize">
-                                                {this.props.pokemon.name}</span>?
-                                        </ModalHeader>
-                                        <ModalBody className="text-center">
-                                            {
-                                                this.state.file && (
-                                                    <img src={URL.createObjectURL(this.state.file)} alt=""></img>
-                                                )
-                                            }
-                                            <FormGroup row>
-                                                <Label for="uploadImage" sm={2}>File</Label>
-                                                <Col sm={10}>
-                                                    <Input type="file" name="file" id="uploadImage" onChange={this.onChange} />
-                                                    <FormText color="muted">
-                                                        Please select an image file here.
-                                                        </FormText>
-                                                </Col>
-                                            </FormGroup>
-                                        </ModalBody>
-                                        <ModalFooter>
-                                            <Button color="danger" onClick={this.onAddImageButtonClicked}>ADD</Button>{' '}
-                                            <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
-                                        </ModalFooter>
-                                    </Modal>
-                                </span>
-                            )
-                        }
-                    </div>
+                    </>
                 )
             };
         }
@@ -434,10 +455,15 @@ export const UpdatePokemonTypeModal = withRouter(
 
             render() {
                 return (
-                    <div>
-                        <Label className="text-dark" onClick={this.toggle}>
-                            <i className="fas fa-paw mr-2 text-secondary"></i>Change Types
-                        </Label>
+                    <>
+                        <span  onClick={this.toggle} id={`PokemonChangeTypes_${this.props.pokemon.id}`}>
+                            <i className="fas fa-paw"></i>
+                        </span>
+                        <TooltipComponent
+                            placement="top"
+                            target={`PokemonChangeTypes_${this.props.pokemon.id}`}
+                            text="Change Types"
+                        />
                         <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                             <ModalHeader toggle={this.toggle}>
                                 Are you sure want to <code>change types </code> of&nbsp;
@@ -446,7 +472,7 @@ export const UpdatePokemonTypeModal = withRouter(
                             </ModalHeader>
                             <ModalBody className="">
                                 <div className="d-flex justify-content-around align-items-center">
-                                    <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
+                                    <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} style={{width:"50%"}} alt=""></img>
                                     <div>
                                         <label>Current:</label>
                                         {
@@ -465,7 +491,7 @@ export const UpdatePokemonTypeModal = withRouter(
                                 <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                             </ModalFooter>
                         </Modal>
-                    </div>
+                    </>
                 )
             };
         }
@@ -566,10 +592,15 @@ export const UpdatePokemonWeaknessModal = withRouter(
 
             render() {
                 return (
-                    <div>
-                        <Label className="text-dark" onClick={this.toggle}>
-                            <i className="fas fa-ghost mr-2 text-secondary"></i>Change Weakness
-                        </Label>
+                    <>
+                        <span  onClick={this.toggle} id={`PokemonChangeWeakness_${this.props.pokemon.id}`}>
+                            <i className="fas fa-ghost"></i>
+                        </span>
+                        <TooltipComponent
+                            placement="top"
+                            target={`PokemonChangeWeakness_${this.props.pokemon.id}`}
+                            text="Change Weakness"
+                        />
                         <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                             <ModalHeader toggle={this.toggle}>
                                 Are you sure want to <code>change weakness </code> of&nbsp;
@@ -578,7 +609,7 @@ export const UpdatePokemonWeaknessModal = withRouter(
                             </ModalHeader>
                             <ModalBody className="">
                                 <div className="d-flex justify-content-around align-items-center">
-                                    <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
+                                    <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} style={{width:"50%"}} alt=""></img>
                                     <div>
                                         <label>Current:</label>
                                         {
@@ -597,7 +628,7 @@ export const UpdatePokemonWeaknessModal = withRouter(
                                 <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                             </ModalFooter>
                         </Modal>
-                    </div>
+                    </>
                 )
             };
         }
@@ -698,10 +729,15 @@ export const UpdatePokemonAbilityModal = withRouter(
 
             render() {
                 return (
-                    <div>
-                        <Label className="text-dark" onClick={this.toggle}>
-                            <i className="fab fa-superpowers mr-2 text-secondary"></i>Change Abilities
-                        </Label>
+                    <>
+                        <span  onClick={this.toggle} id={`PokemonChangeAbilities_${this.props.pokemon.id}`}>
+                            <i className="fab fa-superpowers "></i>
+                        </span>
+                        <TooltipComponent
+                            placement="top"
+                            target={`PokemonChangeAbilities_${this.props.pokemon.id}`}
+                            text="Change Abilities"
+                        />
                         <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                             <ModalHeader toggle={this.toggle}>
                                 Are you sure want to <code>change abilities </code> of&nbsp;
@@ -710,7 +746,7 @@ export const UpdatePokemonAbilityModal = withRouter(
                             </ModalHeader>
                             <ModalBody className="">
                                 <div className="d-flex justify-content-around align-items-center">
-                                    <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
+                                    <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} style={{width:"50%"}} alt=""></img>
                                     <div>
                                         <label>Current:</label>
                                         {
@@ -727,7 +763,7 @@ export const UpdatePokemonAbilityModal = withRouter(
                                 <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                             </ModalFooter>
                         </Modal>
-                    </div>
+                    </>
                 )
             };
         }
@@ -927,10 +963,15 @@ export const UpdatePokemonGeneralModal = withRouter(
                 let ofBasicLabel = ofBasicOptions && ofBasicOptions.filter(a => a.value === params.of_basic)
                     .map(a => a.label);
                 return (
-                    <div>
-                        <Label className="text-dark" onClick={this.toggle}>
-                            <i className="fas fa-edit mr-2 text-secondary"></i>Edit Generals
-                        </Label>
+                    <>
+                        <span  onClick={this.toggle} id={`PokemonChangeGenerals_${this.props.pokemon.id}`}>
+                            <i className="fas fa-edit "></i>
+                        </span>
+                        <TooltipComponent
+                            placement="top"
+                            target={`PokemonChangeGenerals_${this.props.pokemon.id}`}
+                            text="Change Generals"
+                        />
                         <Modal isOpen={this.state.isOpen} toggle={this.toggle} >
                             <ModalHeader toggle={this.toggle}>
                                 Edit general info of&nbsp;
@@ -983,7 +1024,7 @@ export const UpdatePokemonGeneralModal = withRouter(
                                             </Col>
                                         </FormGroup>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-4 col-xs-12">
                                         <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} style={{ width: "100%" }} alt="pokemon"></img>
                                     </div>
                                 </div>
@@ -1017,7 +1058,7 @@ export const UpdatePokemonGeneralModal = withRouter(
                                 <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                             </ModalFooter>
                         </Modal>
-                    </div>
+                    </>
                 )
             };
         }
@@ -1272,21 +1313,14 @@ export const AddNewPokemonModal = withRouter(
             };
 
             render() {
-                // let params = this.state.params;
                 let genderOptions = this.genderOptions;
                 let stageOptions = this.stageOptions;
                 let ofBasicOptions = this.state.pokemonList;
-
-                // let genderLabel = genderOptions && genderOptions.filter(a => a.value === params.gender)
-                //     .map(a => a.label);
-                // let stageLabel = stageOptions && stageOptions.filter(a => a.value === params.stage)
-                //     .map(a => a.label);
-                // let ofBasicLabel = ofBasicOptions && ofBasicOptions.filter(a => a.value === params.of_basic)
-                //     .map(a => a.label);
                 return (
-                    <div>
-                        <Button color="success" className="mr-2" onClick={this.toggle}>
-                            <i className="far fa-plus-square"></i> Add new Pokemon
+                    <>
+                        <Button color="success" className="Content-header__btn" onClick={this.toggle}>
+                            <i className="far fa-plus-square"></i>
+                            <span className="Content-header__btn--text">&nbsp;Add new Pokemon</span>
                         </Button>
                         <Modal isOpen={this.state.isOpen} toggle={this.toggle} size="md">
                             <ModalHeader toggle={this.toggle}>
@@ -1388,7 +1422,7 @@ export const AddNewPokemonModal = withRouter(
                                 <Button color="secondary" onClick={this.toggle}>CANCEL</Button>
                             </ModalFooter>
                         </Modal>
-                    </div>
+                    </>
                 )
             };
         }
