@@ -1,5 +1,5 @@
 import axios from 'axios';
-import appConfigs from 'config';
+import appConfigs from '../config';
 
 class HTTPRequest {
     constructor() { };
