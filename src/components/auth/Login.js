@@ -87,7 +87,7 @@ class LoginComponent extends React.Component {
                         this.state.errorMessage ? <Alert color="danger">{this.state.errorMessage}</Alert> : null
                     }
                     <FormGroup row>
-                        <Label for="username" sm={2}>Username</Label>
+                        <Label className="Auth-form__label--title" for="username" sm={2}>Username</Label>
                         <Col sm={10}>
                             <Input 
                                 name="username" 
@@ -100,7 +100,7 @@ class LoginComponent extends React.Component {
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Label for="password" sm={2}>Password</Label>
+                        <Label className="Auth-form__label--title" for="username" for="password" sm={2}>Password</Label>
                         <Col sm={10}>
                             <Input 
                                 name="password" 
@@ -113,7 +113,7 @@ class LoginComponent extends React.Component {
                         </Col>
                     </FormGroup>
                     <FormGroup >
-                    <Col sm={{offset:2}} className="Auth-form__footer pt-2">
+                    <Col sm={{offset:2}} className="Auth-form__footer">
                         <Label>
                             Don't have account?
                             <Link to={`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_REGISTER}`}> Register now</Link>

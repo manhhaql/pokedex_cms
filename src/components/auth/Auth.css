@@ -1,13 +1,35 @@
+.Auth-container {
+
+}
+.Auth-container__title {
+    text-align: center;
+    margin: 100px 0 50px 0;
+}
 .Auth-form {
-    border: 1px solid rgb(129, 129, 129);
+    border: 1px solid rgba(129, 129, 129, 0.5);
     border-radius: 15px;
     padding: 2rem;
     max-width: 600px;
-    margin: 300px auto
+    margin: auto;
+    position: relative;
 }
 
 .Auth-form__footer {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+}
+
+/* MOBILE DEVICES*/
+@media only screen and (max-width: 600px) {
+    .Auth-container__title {
+        margin: 50px 0;
+    }
+    .Auth-form {
+        padding: 10px;
+        margin: 50px 10px
+    }
+    .Auth-form__label--title {
+        display: none;
+    }
 }
