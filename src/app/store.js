@@ -12,11 +12,7 @@ const Store = () => {
         }),
         compose(
             applyMiddleware(thunk),
-<<<<<<< HEAD
-            window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : ""
-=======
             window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : a => a
->>>>>>> hotfix/styling_auth_components
         )
     );
 
