@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
-import { Tooltip } from 'reactstrap';
+import TooltipComponent from 'components/common/tooltip'
 
 const PokemonAbilityComponent = (props) => {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
-  const toggle = () => setTooltipOpen(!tooltipOpen);
-  return (
-    <div>
-      <span className="Pokemon-ability__text" id={`Ability-${props.ability.id}`}>
-        {props.ability.name}
-      </span>
-      <Tooltip placement="right"
-        isOpen={tooltipOpen}
-        target={`Ability-${props.ability.id}`}
-        toggle={toggle}
-      >
-        {props.ability.description}
-      </Tooltip>
-    </div>
-  );
+    return (
+      <div>
+        <span className="Pokemon-ability__text" id={`Ability_${props.ability.id}_${props.pokemon.id}`}>
+          {props.ability.name}
+        </span>
+        <TooltipComponent
+          placement="right"
+          target= {`Ability_${props.ability.id}_${props.pokemon.id}`}
+          text={props.ability.description}
+        />
+      </div>
+    );
 }
 
 export default PokemonAbilityComponent;

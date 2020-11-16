@@ -7,7 +7,7 @@ import * as dataConstant from 'constant/data';
 
 const SidebarComponent = (props) => {
     return (
-        <div className={`Sidebar ${props.sidebarOpen ? "open" : ""}`}>
+        <div className={`Sidebar ${props.sidebarOpen ? "open" : ""}`} onClick={()=>props.toggleSidebar()}>
             <div className="Sidebar-logo">
                 <div>
                     <div className="Sidebar-logo__img">
@@ -42,6 +42,7 @@ const SidebarComponent = (props) => {
                     )
                 }
             </ul>
+            <div className="Sidebar-overlay" onClick={()=>props.toggleSidebar()}></div>
         </div>
     );
 }

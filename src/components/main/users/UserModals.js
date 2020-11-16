@@ -1,23 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import * as dataConstant from 'constant/data';
 
 import {
     Button,
-    Input,
     Label,
-    Col,
     Modal,
     ModalHeader,
     ModalBody,
     ModalFooter,
-    FormGroup,
-    FormText
 } from 'reactstrap';
-
-import Select from 'react-select';
 
 import HTTPRequest from 'helper/httpRequest';
 import ToastMessage from 'helper/toastMessage';
