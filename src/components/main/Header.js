@@ -55,7 +55,7 @@ class HeaderComponent extends React.Component {
 
     render() {
         if(!this.props.appAuthentication) {
-            return null
+            return <Navbar className="Header"/>
         };
         return (
             <Navbar className="Header">
