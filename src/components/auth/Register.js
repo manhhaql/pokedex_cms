@@ -92,12 +92,12 @@ class RegisterComponent extends React.Component {
         return (
             <div>
                 <Form className="Auth-form" onSubmit={this.onSubmit}>
-                    <h3 className="mb-4">Register</h3>
+                    <h3>Register</h3>
                     {
                         this.state.message ? <Alert color="danger">{this.state.message}</Alert> : null
                     }
                     <FormGroup row>
-                        <Label for="username" sm={4} className="mb-2">
+                        <Label className="Auth-form__label--title" for="username" sm={4}>
                             Username (<code>*</code>)
                         </Label>
                         <Col sm={8}>
@@ -112,7 +112,7 @@ class RegisterComponent extends React.Component {
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Label className="mb-2" for="email" sm={4}>
+                        <Label className="Auth-form__label--title" for="email" sm={4}>
                             Email (<code>*</code>)
                         </Label>
                         <Col sm={8}>
@@ -127,7 +127,7 @@ class RegisterComponent extends React.Component {
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Label className="mb-2" for="password" sm={4}>
+                        <Label className="Auth-form__label--title" for="password" sm={4}>
                             Password (<code>*</code>)
                         </Label>
                         <Col sm={8}>
@@ -142,7 +142,7 @@ class RegisterComponent extends React.Component {
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Label className="mb-2" for="password_check" sm={4}>
+                        <Label className="Auth-form__label--title" for="password_check" sm={4}>
                             Match Password (<code>*</code>)
                         </Label>
                         <Col sm={8}>
@@ -157,7 +157,7 @@ class RegisterComponent extends React.Component {
                         </Col>
                     </FormGroup>
                     <FormGroup >
-                    <Col sm={{offset:4}} className="Auth-form__footer pt-4">
+                    <Col sm={{offset:4}} className="Auth-form__footer">
                         <Label>
                             Have an account?
                             <Link to={`/${routeNameConstant.ROUTE_NAME_AUTH}/${routeNameConstant.ROUTE_NAME_LOGIN}`}> Back to Login</Link>

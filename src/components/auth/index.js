@@ -19,7 +19,7 @@ class AuthComponent extends React.Component {
         return (
             <div className="Auth-container">
                 <HeaderComponent/>
-                <h2 className="text-center text-danger mt-3">Welcome to HaPokedex</h2>
+                <h2 className="Auth-container__title text-danger">Welcome to HaPokedex</h2>
                 {
                     this.props.match.params.page === routeNameConstant.ROUTE_NAME_LOGIN && (
                         <LoginComponent />
