@@ -216,6 +216,25 @@ class UsersComponent extends React.Component {
         )
     };
 
+    _renderActionColumn(user) {
+        return (
+            <div className="Action-button__group">
+                <div className="Action-button__item">
+                    <UpdateUserTypeModal 
+                        user={user}
+                        getUsers={()=>this.getUsers()}
+                    />
+                </div>
+                <div className="Action-button__item">
+                    <UpdateUserStatusModal 
+                        user={user}
+                        getUsers={()=>this.getUsers()}
+                    />
+                </div>
+            </div>
+        )
+    };
+
     _renderUserTable() {
         const options = [
             {
