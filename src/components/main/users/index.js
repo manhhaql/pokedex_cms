@@ -283,7 +283,7 @@ class UsersComponent extends React.Component {
         return (
             <div>
                 <div className="d-flex justify-content-between">
-                    <h2 className="text-secondary">User Table</h2>
+                    <h2 className="text-secondary Content-header__title">User Table</h2>
                     <div className="d-flex align-items-center">
                         <Button color="link" onClick={this.onReload}>
                             <i className="fas fa-sync-alt"></i>

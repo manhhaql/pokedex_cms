@@ -1,37 +1,55 @@
-.Main {
-    width: 100vw;
-    height: 100vh;
-    overflow-x: auto;
-    padding-bottom: 80px;
-}
-.Main-wrapper {
-    margin: 20px 80px;
-    
-    display: flex;
-}
-.Main-content {
-    overflow: hidden;
-    padding: 5px;
-    margin: auto;
-    width: 100%;
-}
+/* Common */
 .toast-top-right {
     top: 132px;
 }
+.input-group-append .btn, .input-group-prepend .btn {
+    z-index: 1;
+}
+
+/* MAIN */
+.Main {
+    overflow-x: auto;
+}
+.Main-wrapper {
+    margin: 20px 100px;
+}
+.Main-content {
+    overflow: hidden;
+    margin: auto;
+    width: 100%;
+    z-index: -1;
+}
+
 /* SIDEBAR */
 .Sidebar {
     width: 250px;
-    height: 650px;
-    border-radius: 10px;
     background: linear-gradient(0deg,#3358f4,#1d8cf8);
-    margin-top: 50px;
     position: fixed;
+    top: 0;
+    bottom: 0;
     left: -250px;
-    z-index: 999;
-    transition: all 0.75s ease-in-out;
+    z-index: 2;
+    transition: all 0.5s ease-in-out;
 }
 .Sidebar.open {
-    left: 20px;
+    left: 0;
+}
+.open .Sidebar-overlay{
+    visibility: visible;
+    opacity: 1;
+    left: 250px;
+}
+.Sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(0.5px);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
 }
 .Sidebar-logo > div {
     display: flex;
@@ -105,10 +123,15 @@
 
 /* HEADER */
 .Header {
-    height: 120px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
     color: #fff;
     line-height: 1.652rem;
     font-size: 20px;
+    z-index: 2;
 }
 .Header::after {
     content: "";
@@ -116,7 +139,6 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    opacity: 0.8;
     top: 0;
     left: 0;
     bottom: 0;
@@ -133,7 +155,6 @@
     bottom: 0;
     right: 0;
     position: absolute;
-    z-index: 0;
 }
 .Header * {
     z-index: 2;
@@ -152,17 +173,13 @@
 /* FOOTER */
 .Footer {
     background: linear-gradient(15deg,#25272e,#475461);
-    height: 80px;
+    height: var(--footer-height);
     color: #fff;
     line-height: 1.652rem;
     font-size: 20px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    /* position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0; */
     position: fixed;
     left: 0;
     bottom: 0;
@@ -170,12 +187,15 @@
 }
 
 @media only screen and (max-width: 600px) {
+    body {
+        --header-height: 80px !important;
+    }
     .table td {
         padding: 0 5px;
         margin: 0;
     }
     .Main-wrapper {
-        margin: 5px 10px;
+        margin: 10px 10px 30px 10px;
     }
     .Header {
         height: 80px;
@@ -183,13 +203,7 @@
     .Header-brand {
         margin-left: 10px;
     }
-    .Sidebar {
-      height: auto;
-      top: 30px;
-      bottom: 80px;
-      border-radius: 0;
+    .Footer {
+        font-size: 18px;
     }
-    .Sidebar.open {
-      left: 0;
-    }
-  }
+}

@@ -8,6 +8,8 @@ import Store from './store';
 import AppRoutes from './AppRoutes';
 import AccessControl from './accessControl';
 
+import './App.css'
+
 const store = Store();
 const browserHistory = createBrowserHistory();
 

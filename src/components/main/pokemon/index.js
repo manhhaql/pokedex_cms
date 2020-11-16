@@ -4,10 +4,6 @@ import { Link, withRouter } from 'react-router-dom';
 
 import { 
     Badge,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
     Button,
     Input,
     InputGroup,
@@ -372,58 +368,46 @@ class PokemonComponent extends React.Component {
 
     _renderActionColumn(pokemon) {
         return (
-            <ul className="list-unstyled">
-                <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret className="text-danger" >
-                        <i className="fas fa-cog"></i>
-                    </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem className="text-center">
-                            Actions
-                        </DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem>
-                            <UpdatePokemonGeneralModal 
-                                pokemon={pokemon}
-                                getPokemons={()=>this.getPokemons()}
-                            />
-                        </DropdownItem>
-                        <DropdownItem>
-                            <UpdatePokemonTypeModal 
-                                pokemon={pokemon}
-                                getPokemons={()=>this.getPokemons()}
-                                _renderPokemonProperty={(type, index)=>this._renderPokemonProperty(type, index)}
-                            />
-                        </DropdownItem>
-                        <DropdownItem>
-                            <UpdatePokemonWeaknessModal 
-                                pokemon={pokemon}
-                                getPokemons={()=>this.getPokemons()}
-                                _renderPokemonProperty={(type, index)=>this._renderPokemonProperty(type, index)}
-                            />
-                        </DropdownItem>
-                        <DropdownItem>
-                            <UpdatePokemonAbilityModal 
-                                pokemon={pokemon}
-                                getPokemons={()=>this.getPokemons()}
-                            />
-                        </DropdownItem>
-                        <DropdownItem>
-                            <PokemonImageModal
-                                pokemon={pokemon}
-                                getPokemons={()=>this.getPokemons()}
-                            />
-                        </DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem className="text-center">
-                            <UpdatePokemonStatusModal 
-                                pokemon={pokemon}
-                                getPokemons={()=>this.getPokemons()}
-                            />
-                        </DropdownItem>
-                    </DropdownMenu>
-                </UncontrolledDropdown>
-            </ul>
+            <div className="Action-button__group">
+                <div className="Action-button__item">
+                    <UpdatePokemonGeneralModal 
+                        pokemon={pokemon}
+                        getPokemons={()=>this.getPokemons()}
+                    />
+                </div>
+                <div className="Action-button__item">
+                    <UpdatePokemonTypeModal 
+                        pokemon={pokemon}
+                        getPokemons={()=>this.getPokemons()}
+                        _renderPokemonProperty={(type, index)=>this._renderPokemonProperty(type, index)}
+                    />
+                </div>
+                <div className="Action-button__item">
+                    <UpdatePokemonWeaknessModal 
+                        pokemon={pokemon}
+                        getPokemons={()=>this.getPokemons()}
+                        _renderPokemonProperty={(type, index)=>this._renderPokemonProperty(type, index)}
+                    />
+                </div>
+                <div className="Action-button__item">
+                    <UpdatePokemonAbilityModal 
+                        pokemon={pokemon}
+                        getPokemons={()=>this.getPokemons()}
+                    />
+                </div>
+                <div className="Action-button__item">
+                    <PokemonImageModal
+                        pokemon={pokemon}
+                        getPokemons={()=>this.getPokemons()}
+                    />
+                </div>
+                <div className="Action-button__item">
+                    <UpdatePokemonStatusModal 
+                        pokemon={pokemon}
+                        getPokemons={()=>this.getPokemons()}
+                    />
+                </div>
+            </div>
         )
     };
 
@@ -437,13 +421,6 @@ class PokemonComponent extends React.Component {
                 key: 'id'
             },
             {
-                th: "Action",
-                td: (pokemon, index) => this.props.appAuthentication.user.type === dataConstant.USER_ADMIN && this._renderActionColumn(pokemon),
-                thClass: 'text-center align-middle',
-                tdClass: 'text-center align-middle',
-                key: 'action'
-            },
-            {
                 th: "Name",
                 td: (pokemon, index) => <Link to={`/${routeNameConstant.ROUTE_NAME_MAIN}/${routeNameConstant.ROUTE_NAME_POKEMON}/${pokemon.id}`} className="text-decoration-none">
                                             {pokemon.name}
@@ -451,6 +428,13 @@ class PokemonComponent extends React.Component {
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle font-weight-bold text-primary text-capitalize',
                 key: 'name'
+            },
+            {
+                th: "Action",
+                td: (pokemon, index) => this.props.appAuthentication.user.type === dataConstant.USER_ADMIN && this._renderActionColumn(pokemon),
+                thClass: 'text-center align-middle',
+                tdClass: 'text-center align-middle',
+                key: 'action'
             },
             {
                 th: "Image",
@@ -504,7 +488,7 @@ class PokemonComponent extends React.Component {
             },
             {
                 th: "Abilities",
-                td: (pokemon, index) => pokemon.abilities && pokemon.abilities.map((ability, index)=> <PokemonAbilityComponent ability={ability} key={index}/>),
+                td: (pokemon, index) => pokemon.abilities && pokemon.abilities.map((ability, index)=> <PokemonAbilityComponent ability={ability} pokemon={pokemon} key={index}/>),
                 thClass: 'text-center align-middle',
                 tdClass: 'text-center align-middle',
                 key: 'ability'
@@ -571,7 +555,7 @@ class PokemonComponent extends React.Component {
         return (
             <div>
                 <div className="d-flex justify-content-between">
-                    <h2 className="text-secondary">Pokemon Table</h2>
+                    <h2 className="text-secondary Content-header__title">Pokemon Table</h2>
                     <div className="d-flex align-items-center">
                         <AddNewPokemonModal
                             getPokemons={()=>this.getPokemons()}

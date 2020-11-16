@@ -62,7 +62,7 @@ const DashboardComponent = (props) => {
     return (
         
         <div className="Dashboard">
-            <h2>DASHBOARD</h2>
+            <h2 className="text-secondary Content-header__title">Dashboard</h2>
             <Container>
                 <Row>
                     <Col className="Dashboard-item bg-success">

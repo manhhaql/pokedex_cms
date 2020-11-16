@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 
 import LoginComponent from './Login';
 import RegisterComponent from './Register';
-import FooterComponent from '../main/Footer';
 import HeaderComponent from '../main/Header';
 
 import * as routeNameConstant from 'constant/routeName';

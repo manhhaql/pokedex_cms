@@ -155,7 +155,7 @@ class PokemonDetailComponent extends React.Component {
         return (
             <div>
                 <div className="Detail-header">
-                    <h2 className="text-secondary">Pokemon Detail</h2>
+                    <h2 className="text-secondary Content-header__title">Pokemon Detail</h2>
                     <Button color="secondary" onClick={this.OnBackButtonClicked}>
                         <i className="fas fa-arrow-left mr-2"></i>Back
                     </Button>

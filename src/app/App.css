@@ -1,0 +1,6 @@
+body {
+    --header-height: 120px;
+    --footer-height: 80px;
+    margin: var(--header-height) 0 var(--footer-height) 0;
+    font-family: 'Monda', sans-serif;
+}
