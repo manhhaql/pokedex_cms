@@ -1,5 +1,5 @@
 .Auth-container {
-    padding-bottom: 100px;
+
 }
 .Auth-container__title {
     text-align: center;
@@ -23,11 +23,11 @@
 /* MOBILE DEVICES*/
 @media only screen and (max-width: 600px) {
     .Auth-container__title {
-        margin: 20px 0;
+        margin: 50px 0;
     }
     .Auth-form {
         padding: 10px;
-        margin: 30px 10px
+        margin: 50px 10px
     }
     .Auth-form__label--title {
         display: none;

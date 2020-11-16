@@ -30,7 +30,6 @@ class AuthComponent extends React.Component {
                         <RegisterComponent />
                     )
                 }
-                <FooterComponent/>
             </div>
         )
     }
