@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TooltipComponent from 'components/common/tooltip'
 
 const PokemonAbilityComponent = (props) => {
