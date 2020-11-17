@@ -4,3 +4,16 @@ body {
     margin: var(--header-height) 0 var(--footer-height) 0;
     font-family: 'Monda', sans-serif;
 }
+
+.toast-top-right {
+    top: 132px;
+}
+.input-group-append .btn, .input-group-prepend .btn {
+    z-index: 1;
+}
+
+@media only screen and (max-width: 600px) {
+    .tooltip {
+        z-index: 1049;
+    }
+}
