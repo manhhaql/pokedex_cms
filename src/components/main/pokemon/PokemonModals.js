@@ -130,7 +130,7 @@ export const UpdatePokemonStatusModal = withRouter(
                                                 {this.props.pokemon.name}</span>?
                                         </ModalHeader>
                                         <ModalBody className="text-center">
-                                            <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
+                                            <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} style={{width:"50%"}} alt=""></img>
                                             <div>
                                                 <span className="text-primary text-capitalize">{this.props.pokemon.name}</span> will now appear on website.
                                             </div>
