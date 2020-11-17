@@ -189,7 +189,7 @@
 @media only screen and (max-width: 600px) {
     body {
         --header-height: 80px !important;
-        --footer-height: 0 !important;
+        margin: var(--header-height) 0 0 0 !important;
     }
     .table td {
         padding: 0 5px;
@@ -205,6 +205,9 @@
         margin-left: 10px;
     }
     .Footer {
-        display: none;
+        position: relative;
+        bottom: 0;
+        left: 0;
+        font-size: 18px;
     }
 }
