@@ -9,7 +9,9 @@ const TooltipComponent = function(props) {
             placement={props.placement}
             target={props.target}
             isOpen={tooltipOpen}
-            toggle={() => setTooltipOpen(!tooltipOpen)}
+            toggle={() => setTimeout(()=>{
+                setTooltipOpen(!tooltipOpen)
+            }, 1)}
         >
             {props.text}
         </Tooltip>
