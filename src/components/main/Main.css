@@ -204,6 +204,6 @@
         margin-left: 10px;
     }
     .Footer {
-        font-size: 18px;
+        display: none;
     }
 }
