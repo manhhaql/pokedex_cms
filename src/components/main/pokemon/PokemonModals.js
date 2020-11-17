@@ -326,7 +326,7 @@ export const PokemonImageModal = withRouter(
                                                 <i className="fas fa-arrow-right text-danger fa-2x"></i>
                                                 {
                                                     this.state.file && (
-                                                        <img src={URL.createObjectURL(this.state.file)} alt=""/>
+                                                        <img src={URL.createObjectURL(this.state.file)} style={{width: "50%"}} alt=""/>
                                                     )
                                                 }
                                                 {
