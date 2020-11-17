@@ -3,16 +3,16 @@ import TooltipComponent from 'components/common/tooltip'
 
 const PokemonAbilityComponent = (props) => {
     return (
-      <div>
-        <span className="Pokemon-ability__text" id={`Ability_${props.ability.id}_${props.pokemon.id}`}>
+      <>
+        <span className="Pokemon-ability__text" id={`Ability_${props.ability.id}_${props.pokemon ? props.pokemon.id : null}`}>
           {props.ability.name}
         </span>
         <TooltipComponent
           placement="right"
-          target= {`Ability_${props.ability.id}_${props.pokemon.id}`}
+          target= {`Ability_${props.ability.id}_${props.pokemon ? props.pokemon.id : null}`}
           text={props.ability.description}
         />
-      </div>
+      </>
     );
 }
 

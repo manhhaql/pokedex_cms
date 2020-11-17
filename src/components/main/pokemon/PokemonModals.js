@@ -116,7 +116,7 @@ export const UpdatePokemonStatusModal = withRouter(
                             this.props.pokemon.status === dataConstant.STATUS_INACTIVE && (
                                 <>
                                     <span onClick={this.toggle} id={`PokemonStatusReactivate_${this.props.pokemon.id}`}>
-                                        <i className="fas fa-lock-open text-success"></i>Reactivate
+                                        <i className="fas fa-lock-open text-success"></i>
                                     </span>
                                     <TooltipComponent
                                         placement="top"
@@ -1267,7 +1267,6 @@ export const AddNewPokemonModal = withRouter(
                     values.abilities = this.state.params.abilities
                 };
 
-                console.log(values)
                 HTTPRequest.post({
                     url: 'pokemon/create',
                     token: this.props.appAuthentication.token,
