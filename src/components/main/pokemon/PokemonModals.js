@@ -322,7 +322,7 @@ export const PokemonImageModal = withRouter(
                                         </ModalHeader>
                                         <ModalBody>
                                             <div className="d-flex justify-content-center align-items-center">
-                                                <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} alt=""></img>
+                                                <img src={this.props.pokemon.image ? this.props.pokemon.image : dataConstant.NO_IMAGE_URL} style={{width: "50%"}} alt=""></img>
                                                 <i className="fas fa-arrow-right text-danger fa-2x"></i>
                                                 {
                                                     this.state.file && (
