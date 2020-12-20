@@ -1,7 +1,7 @@
 const appConfigs = {
     API: {
         // ROOT_URL: 'https://api-hapokedex.herokuapp.com',
-        ROOT_URL: 'http://127.0.0.1:8080'
+        ROOT_URL: "http://127.0.0.1:8080"
     },
     REQUEST: {
         TIMEOUT: 30000
